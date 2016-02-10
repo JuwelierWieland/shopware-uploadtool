@@ -1,0 +1,837 @@
+package de.oktupol.shopware.resources.article;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import de.oktupol.shopware.util.JSONUtils;
+import de.oktupol.shopware.util.ToJsonConvertible;
+
+public class Article implements ToJsonConvertible {
+
+	private static final DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	private static final String delimiter = ",";
+
+	private Map<String, Object> attr = new HashMap<>();
+
+	public Article() {
+		attr.put("active", -1);
+		attr.put("sale", -1);
+		attr.put("id", -1);
+		attr.put("number", null);
+		attr.put("ean", null);
+		attr.put("name", null);
+		attr.put("description", null);
+		attr.put("descriptionLong", null);
+		attr.put("keywords", null);
+		attr.put("categories", null);
+		attr.put("replaceCategories", true);
+		attr.put("supplierId", -1);
+		attr.put("prices", null);
+		attr.put("replacePrices", true);
+		attr.put("filterGroupId", -1);
+		attr.put("propertyValues", null);
+		attr.put("availableFrom", null);
+		attr.put("releaseDate", null);
+		attr.put("highlight", -1);
+		attr.put("notification", -1);
+		attr.put("packUnit", null);
+		attr.put("purchaseUnit", null);
+		attr.put("stockMin", -1);
+		attr.put("inStock", -1);
+		attr.put("shippingTime", null);
+		attr.put("shippingFree", -1);
+		attr.put("additionalText", null);
+		attr.put("attributes", null);
+		attr.put("taxId", -1);
+		attr.put("height", -1);
+		attr.put("width", -1);
+		attr.put("weight", -1);
+		attr.put("images", null);
+		attr.put("replaceImages", false);
+		attr.put("errorMessage", null);
+	}
+
+	public Set<String> attrKeyset() {
+		return attr.keySet();
+	}
+
+	public Map<String, Object> attributes() {
+		return attr;
+	}
+
+	/**
+	 * @return true, falls der Artikel aktiv ist (d.h. er wird im Shop gelistet). false, falls er nicht aktiv ist oder
+	 *         diese Variable nicht aktiv ist (d.h. ignoriert wird).
+	 */
+	public boolean isActive() {
+		return (Integer) attr.get("active") == 1;
+	}
+
+	/**
+	 * @return true, falls der Aktivit&auml;tsstatus aktiv ist (d.h. nicht ignoriert wird), sonst false.
+	 */
+	public boolean activeActive() {
+		return (Integer) attr.get("active") != -1;
+	}
+
+	/**
+	 * Verursacht, dass der Artikel im Shop gelistet wird. Es kann immernoch sein, dass er nicht gelistet wird, falls er
+	 * kein Foto hat oder keiner Kategorie zugewiesen ist.
+	 */
+	public void setActive() {
+		this.setActive(true);
+	}
+
+	/**
+	 * Verursacht, dass der Artikel im Shop nicht gelistet wird.
+	 */
+	public void setInactive() {
+		this.setActive(false);
+	}
+
+	public void setActive(boolean active) {
+		attr.put("active", active ? 1 : 0);
+	}
+
+	/**
+	 * Verursacht, dass der Aktivit&auml;tsstatus deaktiviert wird (d.h. ignoriert wird).
+	 */
+	public void unsetActive() {
+		attr.put("active", -1);
+	}
+
+	/**
+	 * @return true, falls der sich der Artikel im Abverkauf befindet, sonst false.
+	 */
+	public boolean isSale() {
+		return (Integer) attr.get("sale") == 1;
+	}
+
+	/**
+	 * @return true, falls der Abverkaufsstatus aktiv ist.
+	 */
+	public boolean activeSale() {
+		return (Integer) attr.get("sale") != -1;
+	}
+
+	public void setSale(boolean sale) {
+		attr.put("sale", sale ? 1 : 0);
+	}
+
+	/**
+	 * Deaktiviert den Abverkaufsstatus
+	 */
+	public void unsetSale() {
+		attr.put("sale", -1);
+	}
+
+	/**
+	 * Gibt die Shopware-ID des Artikels zur&uuml;ck. Die ID kann nicht gesetzt werden, sondern nur von Artikeln, die
+	 * vorher von der API erhalten wurden, ausgelesen werden.
+	 * 
+	 * @return Die Shopware-ID des Artikels.
+	 */
+	public int getId() {
+		return (Integer) attr.get("id");
+	}
+
+	/**
+	 * Gibt die Artikelnummer des Artikels zur&uuml;ck.
+	 * 
+	 * @return Die Artikenummer des Artikels.
+	 */
+	public String getNumber() {
+		return (String) attr.get("number");
+	}
+
+	/**
+	 * Setzt die Artikelnummer des Artikels.
+	 * 
+	 * @param number
+	 *            Die neue Artikelnummer
+	 */
+	public void setNumber(String number) {
+		attr.put("number", number);
+	}
+
+	public String getEan() {
+		return (String) attr.get("ean");
+	}
+
+	public void setEan(String ean) {
+		attr.put("ean", ean);
+	}
+
+	public String getName() {
+		return (String) attr.get("name");
+	}
+
+	public void setName(String name) {
+		attr.put("name", name);
+	}
+
+	public String getDescription() {
+		return (String) attr.get("description");
+	}
+
+	public void setDescription(String description) {
+		attr.put("description", description);
+	}
+
+	public String getDescriptionLong() {
+		return (String) attr.get("descriptionLong");
+	}
+
+	public void setDescriptionLong(String descriptionLong) {
+		attr.put("descriptionLong", descriptionLong);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<String> getKeywords() {
+		return (Set<String>) attr.get("keywords");
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setKeywords(Set<String> keywords) {
+		if (((Set<String>) attr.get("keywords")) == null)
+			attr.put("keywords", new HashSet<String>());
+		else
+			((Set<String>) attr.get("keywords")).clear();
+		for (String keyword : keywords) {
+			((Set<String>) attr.get("keywords")).add(keyword.toLowerCase().trim());
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addKeyword(String keyword) {
+		if (((Set<String>) attr.get("keywords")) == null)
+			attr.put("keywords", new HashSet<String>());
+		((Set<String>) attr.get("keywords")).add(keyword.toLowerCase().trim());
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean removeKeyword(String keyword) {
+		if (((Set<String>) attr.get("keywords")) == null)
+			return false;
+		return ((Set<String>) attr.get("keywords")).remove(keyword.toLowerCase().trim());
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<ArticleCategory> getCategories() {
+		return (Set<ArticleCategory>) attr.get("categories");
+	}
+
+	public void setCategories(Set<ArticleCategory> categories) {
+		attr.put("categories", categories);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addCategory(ArticleCategory category) {
+		if (((Set<ArticleCategory>) attr.get("categories")) == null)
+			attr.put("categories", new HashSet<ArticleCategory>());
+		((Set<ArticleCategory>) attr.get("categories")).add(category);
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean removeCategory(ArticleCategory category) {
+		if (((Set<ArticleCategory>) attr.get("categories")) == null)
+			return false;
+		return ((Set<ArticleCategory>) attr.get("categories")).remove(category);
+	}
+
+	/**
+	 * Verursacht, dass bei einem Update die bisherigen Kategorien gel&ouml;scht werden, wenn neue Kategorien angegeben
+	 * werden. Dies ist Standard.
+	 */
+	public void replaceCategories() {
+		attr.put("replaceCategories", true);
+	}
+
+	/**
+	 * Verursacht, dass bei einem Update die bisherigen Kategorien erhalten bleiben, wenn neue Kategorien angegeben
+	 * werden.
+	 */
+	public void keepCategories() {
+		attr.put("replaceCategories", false);
+	}
+
+	public int getSupplierId() {
+		return (Integer) attr.get("supplierId");
+	}
+
+	public void setSupplierId(int supplierId) {
+		attr.put("supplierId", supplierId);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ArticlePrice> getPrices() {
+		return (List<ArticlePrice>) attr.get("prices");
+	}
+
+	public void setPrices(List<ArticlePrice> prices) {
+		attr.put("prices", prices);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addPrice(ArticlePrice price) {
+		if (((List<ArticlePrice>) attr.get("prices")) == null)
+			attr.put("prices", new ArrayList<ArticlePrice>());
+		((List<ArticlePrice>) attr.get("prices")).add(price);
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean removePrice(ArticlePrice price) {
+		if (((List<ArticlePrice>) attr.get("prices")) == null)
+			return false;
+		return ((List<ArticlePrice>) attr.get("prices")).remove(price);
+	}
+
+	/**
+	 * Verursacht, dass bei einem Update die bisherigen Preise gel&ouml;scht werden, wenn neue Preise angegeben werden.
+	 * Dies ist Standard.
+	 */
+	public void replacePrices() {
+		attr.put("replacePrices", true);
+	}
+
+	/**
+	 * Verursacht, dass bei einem Update die bisherigen Kategorien erhalten bleiben, wenn neue Kategorien angegeben
+	 * werden.
+	 */
+	public void keepPrices() {
+		attr.put("replacePrices", false);
+	}
+
+	public int getFilterGroupID() {
+		return (Integer) attr.get("filterGroupId");
+	}
+
+	public void setFilterGroupID(int filterGroupID) {
+		attr.put("filterGroupId", filterGroupID);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ArticleProperty> getPropertyValues() {
+		return (List<ArticleProperty>) attr.get("propertyValues");
+	}
+
+	public void setPropertyValues(List<ArticleProperty> propertyValues) {
+		attr.put("propertyValues", propertyValues);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addPropertyValue(ArticleProperty propertyValue) {
+		if (((List<ArticleProperty>) attr.get("propertyValues")) == null)
+			attr.put("propertyValues", new ArrayList<ArticleProperty>());
+		((List<ArticleProperty>) attr.get("propertyValues")).add(propertyValue);
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean removePropertyValue(ArticleProperty propertyValue) {
+		if (((List<ArticleProperty>) attr.get("propertyValues")) == null)
+			return false;
+		return ((List<ArticleProperty>) attr.get("propertyValues")).remove(propertyValue);
+	}
+
+	/*
+	 * @Deprecated public void optionReplaceProperties() { this.replaceProperties = true; }
+	 * 
+	 * @Deprecated public void optionKeepProperties() { this.replaceProperties = false; }
+	 */
+
+	public Date getAvailableFrom() {
+		return (Date) attr.get("availableFrom");
+	}
+
+	public void setAvailableFrom(Date availableFrom) {
+		attr.put("availableFrom", availableFrom);
+	}
+
+	public Date getReleaseDate() {
+		return (Date) attr.get("releaseDate");
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		attr.put("releaseDate", releaseDate);
+	}
+
+	/**
+	 * @return true, falls der Artikel hervorgehoben wird, false, falls nicht oder der Hervorhebestatus deaktiviert ist.
+	 */
+	public boolean isHighlight() {
+		return (Integer) attr.get("highlight") == 1;
+	}
+
+	/**
+	 * @return true, falls der Hervorhebestatus aktiv ist, sonst false.
+	 */
+	public boolean activeHighlight() {
+		return (Integer) attr.get("highlight") != -1;
+	}
+
+	public void setHighlight(boolean highlight) {
+		attr.put("highlight", highlight ? 1 : 0);
+	}
+
+	/**
+	 * Deaktiviert den Hervorhebestatus.
+	 */
+	public void unsetHighlight() {
+		attr.put("highlight", -1);
+	}
+
+	/**
+	 * @return True, falls Benachrichtigungen aktiviert sind, false, wenn nicht oder der Benachrichtigungsstatus
+	 *         deaktiviert ist.
+	 */
+	public boolean isNotification() {
+		return (Integer) attr.get("notification") == 1;
+	}
+
+	/**
+	 * @return True, falls der Benachrichtigungsstatus aktiv ist, sonst false.
+	 */
+	public boolean activeNotification() {
+		return (Integer) attr.get("notification") != -1;
+	}
+
+	public void setNotification(boolean notification) {
+		attr.put("notification", notification ? 1 : 0);
+	}
+
+	/**
+	 * Deaktiviert den Benachrichtigungsstatus.
+	 */
+	public void unsetNotification() {
+		attr.put("notification", -1);
+	}
+
+	public String getPackUnit() {
+		return (String) attr.get("packUnit");
+	}
+
+	public void setPackUnit(String packUnit) {
+		attr.put("packUnit", packUnit);
+	}
+
+	public String getPurchaseUnit() {
+		return (String) attr.get("purchaseUnit");
+	}
+
+	public void setPurchaseUnit(String purchaseUnit) {
+		attr.put("purchaseUnit", purchaseUnit);
+	}
+
+	public int getStockMin() {
+		return (Integer) attr.get("stockMin");
+	}
+
+	public void setStockMin(int stockMin) {
+		attr.put("stockMin", stockMin);
+	}
+
+	public int getInStock() {
+		return (Integer) attr.get("inStock");
+	}
+
+	public void setInStock(int inStock) {
+		attr.put("inStock", inStock);
+	}
+
+	public String getShippingTime() {
+		return (String) attr.get("shippingTime");
+	}
+
+	public void setShippingTime(String shippingTime) {
+		attr.put("shippingTime", shippingTime);
+	}
+
+	/**
+	 * @return true, falls der Artikel Versandkostenfrei ist, false, wenn nicht oder wenn diese Option deaktiviert
+	 *         wurde.
+	 */
+	public boolean isShippingFree() {
+		return (Integer) attr.get("shippingFree") == 1;
+	}
+
+	/**
+	 * @return true, wenn diese Option aktiv ist, sonst false.
+	 */
+	public boolean activeShippingFree() {
+		return (Integer) attr.get("shippingFree") != -1;
+	}
+
+	public void setShippingFree(boolean shippingFree) {
+		attr.put("shippingFree", shippingFree ? 1 : 0);
+	}
+
+	/**
+	 * Deaktiviert diese Option
+	 */
+	public void unsetShippingFree() {
+		attr.put("shippingFree", -1);
+	}
+
+	public String getAdditionalText() {
+		return (String) attr.get("additionalText");
+	}
+
+	public void setAdditionalText(String additionalText) {
+		attr.put("additionalText", additionalText);
+	}
+
+	public String[] getAttributes() {
+		return (String[]) attr.get("attributes");
+	}
+
+	public String getAttribute(int index) {
+		if (((String[]) attr.get("attributes")) == null)
+			return null;
+		return ((String[]) attr.get("attributes"))[index];
+	}
+
+	public void setAttributes(String[] attributes) {
+		if (attributes.length == 20)
+			attr.put("attributes", attributes);
+	}
+
+	public void setAttribute(int index, String attribute) {
+		if (((String[]) attr.get("attributes")) == null)
+			attr.put("attributes", new String[20]);
+		((String[]) attr.get("attributes"))[index] = attribute;
+	}
+
+	public int getTaxId() {
+		return (Integer) attr.get("taxId");
+	}
+
+	public void setTaxId(int taxId) {
+		attr.put("taxId", taxId);
+	}
+
+	public double getHeight() {
+		if (attr.get("height") instanceof Integer)
+			return (Integer) attr.get("height");
+		return (Double) attr.get("height");
+	}
+
+	public void setHeight(double height) {
+		attr.put("height", height);
+	}
+
+	public double getWidth() {
+		if (attr.get("width") instanceof Integer)
+			return (Integer) attr.get("width");
+		return (Double) attr.get("width");
+	}
+
+	public void setWidth(double width) {
+		attr.put("width", width);
+	}
+
+	public double getWeight() {
+		if (attr.get("weight") instanceof Integer)
+			return (Integer) attr.get("width");
+		return (Double) attr.get("weight");
+	}
+
+	public void setWeight(double weight) {
+		attr.put("weight", weight);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ArticleImage> getImages() {
+		return (List<ArticleImage>) attr.get("images");
+	}
+
+	public void setImages(List<ArticleImage> images) {
+		attr.put("images", images);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addImage(ArticleImage image) {
+		if (((List<ArticleImage>) attr.get("images")) == null)
+			attr.put("images", new ArrayList<ArticleImage>());
+		((List<ArticleImage>) attr.get("images")).add(image);
+	}
+
+	@SuppressWarnings("unchecked")
+	public boolean removeImage(ArticleImage image) {
+		if (((List<ArticleImage>) attr.get("images")) == null)
+			return false;
+		return ((List<ArticleImage>) attr.get("images")).remove(image);
+	}
+
+	/**
+	 * Verursacht, dass bei einem Update die bisherigen Bilder gel&ouml;scht werden, wenn neue Bilder angegeben werden.
+	 */
+	public void replaceImages() {
+		attr.put("replaceImages", true);
+	}
+
+	/**
+	 * Verursacht, dass bei einem Update die bisherigen Bilder erhalten bleiben, wenn neue Bilder angegeben werden. Dies
+	 * ist Standard.
+	 */
+	public void keepImages() {
+		attr.put("replaceImages", false);
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		attr.put("errorMessage", errorMessage);
+	}
+
+	public String getErrorMessage() {
+		return (String) attr.get("errorMessage");
+	}
+
+	@Override
+	public JSONObject toJSONObject() {
+		JSONObject result = new JSONObject();
+		JSONObject mainDetail = new JSONObject();
+		JSONObject attributes = new JSONObject();
+
+		JSONArray categories = JSONUtils.createJSONArray(this.getCategories());
+		JSONArray propertyValues = JSONUtils.createJSONArray(this.getPropertyValues());
+		JSONArray prices = JSONUtils.createJSONArray(this.getPrices());
+		JSONArray images = JSONUtils.createJSONArray(this.getImages());
+
+		if (this.getAttributes() != null) {
+			for (int i = 0; i < this.getAttributes().length; i++)
+				attributes.put("attr" + (i + 1), this.getAttribute(i));
+			mainDetail.put("attribute", attributes);
+		}
+
+		if (activeSale())
+			mainDetail.put("active", isSale() ? 1 : 0);
+		if (getShippingTime() != null)
+			mainDetail.put("shippingTime", getShippingTime());
+		if (activeShippingFree())
+			mainDetail.put("shippingFree", isShippingFree());
+		if (getStockMin() >= 0)
+			mainDetail.put("stockMin", getStockMin());
+		if (getInStock() >= 0)
+			mainDetail.put("inStock", getInStock());
+		if (getNumber() != null)
+			mainDetail.put("number", getNumber());
+		if (getEan() != null)
+			mainDetail.put("ean", getEan());
+		if (getPackUnit() != null)
+			mainDetail.put("packUnit", getPackUnit());
+		if (getPurchaseUnit() != null)
+			mainDetail.put("purchaseUnit", getPurchaseUnit());
+		if (getAdditionalText() != null)
+			mainDetail.put("additionalText", getAdditionalText());
+		if (getHeight() >= 0)
+			mainDetail.put("height", getHeight());
+		if (getWidth() >= 0)
+			mainDetail.put("width", getWidth());
+		if (getWeight() >= 0)
+			mainDetail.put("weight", getWeight());
+
+		if (getName() != null)
+			result.put("name", getName());
+		if (getDescription() != null)
+			result.put("description", getDescription());
+		if (getDescriptionLong() != null)
+			result.put("descriptionLong", getDescriptionLong());
+		if (getAvailableFrom() != null)
+			result.put("availableFrom", dateformat.format(getAvailableFrom()));
+		if (getReleaseDate() != null)
+			result.put("releaseDate", dateformat.format(getReleaseDate()));
+		if (getFilterGroupID() != -1)
+			result.put("filterGroupId", getFilterGroupID());
+		if (getTaxId() != -1)
+			result.put("taxId", getTaxId());
+		if (getSupplierId() != -1)
+			result.put("supplierId", getSupplierId());
+		if (activeHighlight())
+			result.put("highlight", isHighlight());
+		if (activeNotification())
+			result.put("notification", isNotification());
+		if (getKeywords() != null)
+			result.put("keywords", String.join(delimiter, getKeywords()));
+		if (activeActive())
+			result.put("active", isActive());
+
+		if (prices != null && prices.length() > 0) {
+			mainDetail.put("prices", prices);
+			mainDetail.put("__option_prices", new JSONObject().put("replace", (Boolean) attr.get("replacePrices")));
+		}
+
+		if (mainDetail.length() > 0)
+			result.put("mainDetail", mainDetail);
+		if (categories != null && categories.length() > 0) {
+			result.put("categories", categories);
+			result.put("__options_categories", new JSONObject().put("replace", (Boolean) attr.get("replaceCategories")));
+		}
+		if (propertyValues != null && propertyValues.length() > 0) {
+			result.put("propertyValues", propertyValues);
+			// result.put("__option_propertyValues", new JSONObject().put("replace", replaceProperties));
+		}
+		if (images != null && images.length() > 0) {
+			result.put("images", images);
+			result.put("__options_images", new JSONObject().put("replace", (Boolean) attr.get("replaceImages")));
+		}
+
+		return result;
+	}
+
+	/**
+	 * Erstellt ein {@link Article}-Objekt aus einem {@link JSONObject}
+	 * 
+	 * @param data
+	 *            Das {@link JSONObject}, das den Artikel enth&auml;lt
+	 * @return Ein {@link Article}
+	 */
+	public static Article createFromJSONObject(JSONObject data) {
+		if (data == null)
+			return null;
+		Article result = new Article();
+		if (data.has("id") && !data.isNull("id"))
+			result.attr.put("id", data.getInt("id"));
+		if (data.has("name") && !data.isNull("name"))
+			result.setName(data.getString("name"));
+		if (data.has("description") && !data.isNull("description"))
+			result.setDescription(data.getString("description"));
+		if (data.has("descriptionLong") && !data.isNull("descriptionLong"))
+			result.setDescriptionLong(data.getString("descriptionLong"));
+		if (data.has("availableFrom") && !data.isNull("availableFrom"))
+			try {
+				result.setAvailableFrom(dateformat.parse(data.getString("availableFrom")));
+			} catch (ParseException e) {
+				result.setAvailableFrom(new Date());
+			}
+		if (data.has("releaseDate") && !data.isNull("releaseDate"))
+			try {
+				result.setReleaseDate(dateformat.parse(data.getString("releaseDate")));
+			} catch (ParseException e) {
+				result.setReleaseDate(new Date());
+			}
+		if (data.has("filterGroupId") && !data.isNull("filterGroupId"))
+			result.setFilterGroupID(data.getInt("filterGroupId"));
+		if (data.has("taxId") && !data.isNull("taxId"))
+			result.setTaxId(data.getInt("taxId"));
+		if (data.has("supplierId") && !data.isNull("supplierId"))
+			result.setSupplierId(data.getInt("supplierId"));
+		if (data.has("highlight") && !data.isNull("highlight"))
+			result.setHighlight(data.getBoolean("highlight"));
+		if (data.has("notification") && !data.isNull("notification"))
+			result.setNotification(data.getBoolean("notification"));
+		if (data.has("keywords") && !data.isNull("keywords"))
+			result.setKeywords(new HashSet<>(Arrays.asList(data.getString("keywords").split(delimiter))));
+		if (data.has("active") && !data.isNull("active"))
+			result.setActive(data.getBoolean("active"));
+
+		if (data.has("mainDetail") && !data.isNull("mainDetail")) {
+			JSONObject mainDetail = data.getJSONObject("mainDetail");
+
+			if (mainDetail.has("active") && !mainDetail.isNull("active"))
+				result.setSale(mainDetail.getInt("active") == 1);
+			if (mainDetail.has("shippingTime") && !mainDetail.isNull("shippingTime"))
+				result.setShippingTime(mainDetail.getString("shippingTime"));
+			if (mainDetail.has("shippingFree") && !mainDetail.isNull("shippingFree"))
+				result.setShippingFree(mainDetail.getBoolean("shippingFree"));
+			if (mainDetail.has("stockMin") && !mainDetail.isNull("stockMin"))
+				result.setStockMin(mainDetail.getInt("stockMin"));
+			if (mainDetail.has("inStock") && !mainDetail.isNull("inStock"))
+				result.setInStock(mainDetail.getInt("inStock"));
+			if (mainDetail.has("number") && !mainDetail.isNull("number"))
+				result.setNumber(mainDetail.getString("number"));
+			if (mainDetail.has("ean") && !mainDetail.isNull("ean"))
+				result.setEan(mainDetail.getString("ean"));
+			if (mainDetail.has("packUnit") && !mainDetail.isNull("packUnit"))
+				result.setPackUnit(mainDetail.getString("packUnit"));
+			if (mainDetail.has("additionalText") && !mainDetail.isNull("additionalText"))
+				result.setAdditionalText(mainDetail.getString("additionalText"));
+			if (mainDetail.has("height") && !mainDetail.isNull("height"))
+				result.setHeight(mainDetail.getDouble("height"));
+			if (mainDetail.has("width") && !mainDetail.isNull("width"))
+				result.setWidth(mainDetail.getDouble("width"));
+			if (mainDetail.has("weight") && !mainDetail.isNull("weight"))
+				result.setWeight(mainDetail.getDouble("weight"));
+
+			if (mainDetail.has("attribute") && !data.isNull("attribute")) {
+				JSONObject attribute = mainDetail.getJSONObject("attribute");
+				for (int i = 0; i < 20; i++) {
+					if (!attribute.isNull("attr" + (i + 1)))
+						result.setAttribute(i, attribute.getString("attr" + (i + 1)));
+				}
+			}
+
+			if (mainDetail.has("prices") && !mainDetail.isNull("prices")) {
+				JSONArray prices = mainDetail.getJSONArray("prices");
+				for (int i = 0; i < prices.length(); i++) {
+					result.addPrice(ArticlePrice.createFromJSONObject(prices.getJSONObject(i)));
+				}
+			}
+		}
+
+		if (data.has("categories") && !data.isNull("categories")) {
+			if (data.get("categories") instanceof JSONObject) {
+				JSONObject categories = data.getJSONObject("categories");
+				Set<String> keySet = categories.keySet();
+				for (String key : keySet) {
+					result.addCategory(new ArticleCategory(Integer.parseInt(key)));
+				}
+			} else if (data.get("categories") instanceof JSONArray) {
+				JSONArray categories = data.getJSONArray("categories");
+				for (int i = 0; i < categories.length(); i++)
+					result.addCategory(new ArticleCategory(categories.getJSONObject(i).getInt("id")));
+			}
+		}
+
+		if (data.has("propertyValues") && !data.isNull("propertyValues")) {
+			JSONArray propertyValues = data.getJSONArray("propertyValues");
+			for (int i = 0; i < propertyValues.length(); i++) {
+				result.addPropertyValue(ArticleProperty.createFromJSONObject(propertyValues.getJSONObject(i)));
+			}
+		}
+
+		if (data.has("images") && !data.isNull("images")) {
+			JSONArray images = data.getJSONArray("images");
+			for (int i = 0; i < images.length(); i++) {
+				result.addImage(ArticleImage.createFromJSONObject(images.getJSONObject(i)));
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Gibt den Artikel in JSON-Schreibweise aus.
+	 */
+	@Override
+	public String toString() {
+		return this.toJSONObject().toString(4);
+	}
+
+	public static void main(String[] args) {
+		Article a = new Article();
+		a.setName("Testartikel");
+		a.setDescription("Testbeschreibung");
+		a.addImage(new ArticleImage(83, true));
+		a.removeImage(new ArticleImage(83, true));
+		a.addKeyword("key");
+		a.addKeyword("lAMe");
+		a.addKeyword("    WORD");
+		a.removeKeyword("   lame");
+		System.out.println(a.getKeywords());
+		a.addPrice(new ArticlePrice(15));
+		a.setAttribute(4, "asdf");
+		a.addCategory(new ArticleCategory(123));
+		System.out.println(a);
+	}
+}
