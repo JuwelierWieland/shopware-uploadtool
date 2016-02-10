@@ -4,7 +4,7 @@ This application is highly customized for my own needs, so if you want to use it
 
 ## Installation
 ### Requirements
-* Java 1.7 or higher
+* Java 1.8 or higher
 * Maven 3.0.4 or higher (only for building the project)
 
 ### Installation from binary
