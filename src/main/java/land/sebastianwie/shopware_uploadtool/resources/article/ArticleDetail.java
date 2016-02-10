@@ -368,7 +368,7 @@ public class ArticleDetail implements ToJsonConvertible {
 		if (data.has("id") && !data.isNull("id"))
 			result.setId(data.getInt("id"));
 		if (data.has("active") && !data.isNull("active"))
-			result.setVariantActive(data.getInt("active") == 1);
+			result.setVariantActive(data.getBoolean("active"));
 		if (data.has("shippingTime") && !data.isNull("shippingTime"))
 			result.setShippingTime(data.getString("shippingTime"));
 		if (data.has("shippingFree") && !data.isNull("shippingFree"))
