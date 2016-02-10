@@ -20,7 +20,7 @@ public class InfoTab extends Tab {
 	private JScrollPane scrollPane;
 	private JButton saveButton;
 	private Controller c;
-	
+
 	private static final String INFO_FILE = System.getProperty("user.home") + "/.shopwareUploadToolInfo.txt";
 
 	static {
@@ -28,7 +28,7 @@ public class InfoTab extends Tab {
 		try {
 			tmp = new String(Files.readAllBytes(Paths.get(INFO_FILE)));
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			tmp = "Fehler - Keine Infodatei (~/.shopwareUploadToolInfo) vorhanden.";
 		}
 		infoTxt = tmp;

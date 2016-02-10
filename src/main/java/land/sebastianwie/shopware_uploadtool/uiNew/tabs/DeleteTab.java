@@ -149,8 +149,7 @@ public class DeleteTab extends Tab {
 	}
 
 	private void selectDeleteFile() {
-		File f = c.selectFile("todelete.xlsx", false, new Filetype[] { Filetype.XLS_ALL, Filetype.XLSX,
-				Filetype.XLSX_MS, Filetype.XLS });
+		File f = c.selectFile("todelete.xlsx", false, new Filetype[] { Filetype.XLS_ALL, Filetype.XLSX, Filetype.XLSX_MS, Filetype.XLS });
 		if (f != null)
 			deleteFileTxt.setText(f.getAbsolutePath());
 	}

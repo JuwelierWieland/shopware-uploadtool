@@ -67,23 +67,26 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * @return true, falls der Artikel aktiv ist (d.h. er wird im Shop gelistet). false, falls er nicht aktiv ist oder
-	 *         diese Variable nicht aktiv ist (d.h. ignoriert wird).
+	 * @return true, falls der Artikel aktiv ist (d.h. er wird im Shop
+	 *         gelistet). false, falls er nicht aktiv ist oder diese Variable
+	 *         nicht aktiv ist (d.h. ignoriert wird).
 	 */
 	public boolean isActive() {
 		return active == 1;
 	}
 
 	/**
-	 * @return true, falls der Aktivit&auml;tsstatus aktiv ist (d.h. nicht ignoriert wird), sonst false.
+	 * @return true, falls der Aktivit&auml;tsstatus aktiv ist (d.h. nicht
+	 *         ignoriert wird), sonst false.
 	 */
 	public boolean activeActive() {
 		return active != -1;
 	}
 
 	/**
-	 * Verursacht, dass der Artikel im Shop gelistet wird. Es kann immernoch sein, dass er nicht gelistet wird, falls er
-	 * kein Foto hat oder keiner Kategorie zugewiesen ist.
+	 * Verursacht, dass der Artikel im Shop gelistet wird. Es kann immernoch
+	 * sein, dass er nicht gelistet wird, falls er kein Foto hat oder keiner
+	 * Kategorie zugewiesen ist.
 	 */
 	public void setActive() {
 		this.setActive(true);
@@ -101,14 +104,16 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * Verursacht, dass der Aktivit&auml;tsstatus deaktiviert wird (d.h. ignoriert wird).
+	 * Verursacht, dass der Aktivit&auml;tsstatus deaktiviert wird (d.h.
+	 * ignoriert wird).
 	 */
 	public void unsetActive() {
 		this.active = -1;
 	}
 
 	/**
-	 * @return true, falls der sich der Artikel im Abverkauf befindet, sonst false.
+	 * @return true, falls der sich der Artikel im Abverkauf befindet, sonst
+	 *         false.
 	 */
 	public boolean isVariantActive() {
 		return mainDetail.isVariantActive();
@@ -133,8 +138,9 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * Gibt die Shopware-ID des Artikels zur&uuml;ck. Die ID kann nicht gesetzt werden, sondern nur von Artikeln, die
-	 * vorher von der API erhalten wurden, ausgelesen werden.
+	 * Gibt die Shopware-ID des Artikels zur&uuml;ck. Die ID kann nicht gesetzt
+	 * werden, sondern nur von Artikeln, die vorher von der API erhalten wurden,
+	 * ausgelesen werden.
 	 * 
 	 * @return Die Shopware-ID des Artikels.
 	 */
@@ -268,16 +274,16 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * Verursacht, dass bei einem Update die bisherigen Kategorien gel&ouml;scht werden, wenn neue Kategorien angegeben
-	 * werden. Dies ist Standard.
+	 * Verursacht, dass bei einem Update die bisherigen Kategorien gel&ouml;scht
+	 * werden, wenn neue Kategorien angegeben werden. Dies ist Standard.
 	 */
 	public void replaceCategories() {
 		this.replaceCategories = true;
 	}
 
 	/**
-	 * Verursacht, dass bei einem Update die bisherigen Kategorien erhalten bleiben, wenn neue Kategorien angegeben
-	 * werden.
+	 * Verursacht, dass bei einem Update die bisherigen Kategorien erhalten
+	 * bleiben, wenn neue Kategorien angegeben werden.
 	 */
 	public void keepCategories() {
 		this.replaceCategories = false;
@@ -312,16 +318,16 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * Verursacht, dass bei einem Update die bisherigen Preise gel&ouml;scht werden, wenn neue Preise angegeben werden.
-	 * Dies ist Standard.
+	 * Verursacht, dass bei einem Update die bisherigen Preise gel&ouml;scht
+	 * werden, wenn neue Preise angegeben werden. Dies ist Standard.
 	 */
 	public void replacePrices() {
 		mainDetail.replacePrices();
 	}
 
 	/**
-	 * Verursacht, dass bei einem Update die bisherigen Kategorien erhalten bleiben, wenn neue Kategorien angegeben
-	 * werden.
+	 * Verursacht, dass bei einem Update die bisherigen Kategorien erhalten
+	 * bleiben, wenn neue Kategorien angegeben werden.
 	 */
 	public void keepPrices() {
 		mainDetail.keepPrices();
@@ -334,11 +340,11 @@ public class Article implements ToJsonConvertible {
 	public void setCustomProductId(int customProductId) {
 		this.customProductId = customProductId;
 	}
-	
+
 	public String getTemplate() {
 		return template;
 	}
-	
+
 	public void setTemplate(String template) {
 		this.template = template;
 	}
@@ -377,9 +383,11 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/*
-	 * @Deprecated public void optionReplaceProperties() { this.replaceProperties = true; }
+	 * @Deprecated public void optionReplaceProperties() {
+	 * this.replaceProperties = true; }
 	 * 
-	 * @Deprecated public void optionKeepProperties() { this.replaceProperties = false; }
+	 * @Deprecated public void optionKeepProperties() { this.replaceProperties =
+	 * false; }
 	 */
 
 	public Date getAvailableFrom() {
@@ -399,7 +407,8 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * @return true, falls der Artikel hervorgehoben wird, false, falls nicht oder der Hervorhebestatus deaktiviert ist.
+	 * @return true, falls der Artikel hervorgehoben wird, false, falls nicht
+	 *         oder der Hervorhebestatus deaktiviert ist.
 	 */
 	public boolean isHighlight() {
 		return highlight == 1;
@@ -424,8 +433,8 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * @return True, falls Benachrichtigungen aktiviert sind, false, wenn nicht oder der Benachrichtigungsstatus
-	 *         deaktiviert ist.
+	 * @return True, falls Benachrichtigungen aktiviert sind, false, wenn nicht
+	 *         oder der Benachrichtigungsstatus deaktiviert ist.
 	 */
 	public boolean isNotification() {
 		return notification == 1;
@@ -498,8 +507,8 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * @return true, falls der Artikel Versandkostenfrei ist, false, wenn nicht oder wenn diese Option deaktiviert
-	 *         wurde.
+	 * @return true, falls der Artikel Versandkostenfrei ist, false, wenn nicht
+	 *         oder wenn diese Option deaktiviert wurde.
 	 */
 	public boolean isShippingFree() {
 		return mainDetail.isShippingFree();
@@ -605,15 +614,16 @@ public class Article implements ToJsonConvertible {
 	}
 
 	/**
-	 * Verursacht, dass bei einem Update die bisherigen Bilder gel&ouml;scht werden, wenn neue Bilder angegeben werden.
+	 * Verursacht, dass bei einem Update die bisherigen Bilder gel&ouml;scht
+	 * werden, wenn neue Bilder angegeben werden.
 	 */
 	public void replaceImages() {
 		this.replaceImages = true;
 	}
 
 	/**
-	 * Verursacht, dass bei einem Update die bisherigen Bilder erhalten bleiben, wenn neue Bilder angegeben werden. Dies
-	 * ist Standard.
+	 * Verursacht, dass bei einem Update die bisherigen Bilder erhalten bleiben,
+	 * wenn neue Bilder angegeben werden. Dies ist Standard.
 	 */
 	public void keepImages() {
 		this.replaceImages = false;
@@ -740,7 +750,8 @@ public class Article implements ToJsonConvertible {
 		}
 		if (propertyValues != null && propertyValues.length() > 0) {
 			result.put("propertyValues", propertyValues);
-			// result.put("__option_propertyValues", new JSONObject().put("replace", replaceProperties));
+			// result.put("__option_propertyValues", new
+			// JSONObject().put("replace", replaceProperties));
 		}
 		if (images != null && images.length() > 0) {
 			result.put("images", images);
@@ -783,8 +794,9 @@ public class Article implements ToJsonConvertible {
 			}
 		/*
 		 * if (data.has("releaseDate") && !data.isNull("releaseDate")) try {
-		 * result.setReleaseDate(dateformat.parse(data.getString("releaseDate"))); } catch (ParseException e) {
-		 * result.setReleaseDate(new Date()); }
+		 * result
+		 * .setReleaseDate(dateformat.parse(data.getString("releaseDate"))); }
+		 * catch (ParseException e) { result.setReleaseDate(new Date()); }
 		 */
 		if (data.has("filterGroupId") && !data.isNull("filterGroupId"))
 			result.setFilterGroupID(data.getInt("filterGroupId"));
@@ -836,8 +848,7 @@ public class Article implements ToJsonConvertible {
 			if (set.has("groups") && !set.isNull("groups")) {
 				JSONArray groups = set.getJSONArray("groups");
 				for (int i = 0; i < groups.length(); i++) {
-					ArticleConfiguratorGroup group = ArticleConfiguratorGroup.createFromJSONObject(groups
-							.getJSONObject(i));
+					ArticleConfiguratorGroup group = ArticleConfiguratorGroup.createFromJSONObject(groups.getJSONObject(i));
 					ArticleConfiguratorOption.configuratorIdMap.put(group.getId(), group.getName());
 					result.addConfiguratorGroup(group);
 				}

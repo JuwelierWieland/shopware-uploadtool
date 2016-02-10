@@ -10,7 +10,9 @@ import org.dom4j.Document;
 import org.dom4j.Node;
 
 /**
- * Mit dieser Klasse kann man TOPM-Artikelnummern in Shopware-Artikelnummern umwandeln.
+ * Mit dieser Klasse kann man TOPM-Artikelnummern in Shopware-Artikelnummern
+ * umwandeln.
+ * 
  * @author Sebastian Wieland
  *
  */
@@ -21,7 +23,9 @@ public class SupplierMapper {
 
 	/**
 	 * Erstellt einen neuen Mapper
-	 * @param suppliers Die XML-Datei, in der die Hersteller aufgelistet sind.
+	 * 
+	 * @param suppliers
+	 *            Die XML-Datei, in der die Hersteller aufgelistet sind.
 	 */
 	public SupplierMapper(Document suppliers) {
 		this.supplierXML = suppliers;
@@ -29,6 +33,7 @@ public class SupplierMapper {
 
 	/**
 	 * Findet die Shopware-Hersteller-Id für einen Artikel heraus.
+	 * 
 	 * @param topmSupplier
 	 * @param ordernumber
 	 * @return
@@ -56,9 +61,11 @@ public class SupplierMapper {
 
 		return -1;
 	}
-	
+
 	/**
-	 * Generiert die Shopware-Artikelnummer für einen Artikel. Dieser Artikel muss nicht unbedingt in Shopware existieren.
+	 * Generiert die Shopware-Artikelnummer für einen Artikel. Dieser Artikel
+	 * muss nicht unbedingt in Shopware existieren.
+	 * 
 	 * @param topmSupplier
 	 * @param ordernumber
 	 * @return
@@ -69,11 +76,11 @@ public class SupplierMapper {
 			return null;
 		return swSupplierID + DELIMITER + mask(ordernumber);
 	}
-	
+
 	private static String mask(String ordernumber) {
 		return ordernumber.replaceAll("[^\\w.-]", "_");
 	}
-	
+
 	public static void main(String[] args) {
 		Document suppliers = DocumentUtils.fromURL("/home/sebastian/tmp/suppliers.xml");
 		SupplierMapper mapper = new SupplierMapper(suppliers);

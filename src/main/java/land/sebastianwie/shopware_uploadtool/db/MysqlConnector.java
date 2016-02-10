@@ -22,8 +22,7 @@ public class MysqlConnector {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public MysqlConnector(String hostname, String username, String password, String database) throws SQLException,
-			ClassNotFoundException {
+	public MysqlConnector(String hostname, String username, String password, String database) throws SQLException, ClassNotFoundException {
 		Class.forName("com.mysql.jdbc.Driver");
 		Properties connProperties = new Properties();
 		connProperties.put("user", username);
@@ -42,7 +41,8 @@ public class MysqlConnector {
 	}
 
 	/**
-	 * Setzt die ID des Custom Products für einen Artikel. Dies setzt das Shopware-Plugin "Custom Products" voraus.
+	 * Setzt die ID des Custom Products für einen Artikel. Dies setzt das
+	 * Shopware-Plugin "Custom Products" voraus.
 	 * 
 	 * @param articleId
 	 * @param customGroupId
@@ -53,17 +53,18 @@ public class MysqlConnector {
 		if (customGroupId < 0)
 			return deleteCustomProduct(articleId);
 		Statement s = conn.createStatement();
-		int updateResult = s.executeUpdate("update s_plugin_customizing_articles set group_id=" + customGroupId
-				+ " where article_id=" + articleId);
+		int updateResult = s.executeUpdate("update s_plugin_customizing_articles set group_id=" + customGroupId + " where article_id="
+				+ articleId);
 		if (updateResult == 0)
-			return s.executeUpdate("insert into s_plugin_customizing_articles(article_id, group_id) values("
-					+ articleId + ", " + customGroupId + ")");
+			return s.executeUpdate("insert into s_plugin_customizing_articles(article_id, group_id) values(" + articleId + ", "
+					+ customGroupId + ")");
 		else
 			return updateResult;
 	}
 
 	/**
-	 * Fragt die ID des Custom Producst für einen Artikel ab. Dies setzt das Shopware-Plugin "Custom Products" voraus.
+	 * Fragt die ID des Custom Producst für einen Artikel ab. Dies setzt das
+	 * Shopware-Plugin "Custom Products" voraus.
 	 * 
 	 * @param articleId
 	 * @return
@@ -71,8 +72,7 @@ public class MysqlConnector {
 	 */
 	public int getCustomProductId(int articleId) throws SQLException {
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("select group_id from s_plugin_customizing_articles where article_id="
-				+ articleId);
+		ResultSet rs = s.executeQuery("select group_id from s_plugin_customizing_articles where article_id=" + articleId);
 		if (rs.next())
 			return rs.getInt("group_id");
 		else
@@ -101,12 +101,8 @@ public class MysqlConnector {
 	public ArticleProperty getPropertyById(int id) throws SQLException {
 		Statement s = conn.createStatement();
 		// @f:off
-		String query = "select "
-				+ "v.id, o.name, v.value "
-				+ "from s_filter_values v "
-				+ "left join "
-				+ "s_filter_options o on v.optionId = o.id "
-				+ "where v.id = " + id;
+		String query = "select " + "v.id, o.name, v.value " + "from s_filter_values v " + "left join "
+				+ "s_filter_options o on v.optionId = o.id " + "where v.id = " + id;
 		// @f:on
 		ResultSet rs = s.executeQuery(query);
 		if (rs.next())
@@ -157,7 +153,8 @@ public class MysqlConnector {
 		MysqlConnector c = new MysqlConnector(dbhost, dbuser, dbpassword, dbdatabase);
 
 		// Statement stm = c.conn.createStatement();
-		// ResultSet rs = stm.executeQuery("select * from s_articles order by id desc limit 3");
+		// ResultSet rs =
+		// stm.executeQuery("select * from s_articles order by id desc limit 3");
 		// while (rs.next()) {
 		// System.out.println("id = " + rs.getInt("id"));
 		// java.lang.ClassNotFoundException: com.mysql.jdbc.Driver}

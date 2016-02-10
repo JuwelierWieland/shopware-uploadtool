@@ -51,7 +51,7 @@ public class ProcessStatus {
 	public int getErrors() {
 		return errors;
 	}
-	
+
 	public void setTodo(int todo) {
 		this.todo = todo;
 	}
@@ -59,7 +59,7 @@ public class ProcessStatus {
 	public int getTodo() {
 		return todo;
 	}
-	
+
 	public void decTodo() {
 		todo--;
 	}

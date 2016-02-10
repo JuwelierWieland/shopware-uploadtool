@@ -13,13 +13,12 @@ import javax.swing.SpringLayout;
 
 public class LoginPanel extends JPanel {
 	private static final long serialVersionUID = 370581390104322046L;
-	
+
 	private Controller c;
 
-	private JLabel info, serverLabel, usernameLabel, apiKeyLabel, ftpServerLabel, ftpUsernameLabel, ftpPasswordLabel,
-			mySQLServerLabel, mySQLUsernameLabel, mySQLPasswordLabel, mySQLSchemaLabel;
-	private JTextField serverTxt, usernameTxt, ftpServerTxt, ftpUsernameTxt, mySQLServerTxt, mySQLUsernameTxt,
-			mySQLSchemaTxt;
+	private JLabel info, serverLabel, usernameLabel, apiKeyLabel, ftpServerLabel, ftpUsernameLabel, ftpPasswordLabel, mySQLServerLabel,
+			mySQLUsernameLabel, mySQLPasswordLabel, mySQLSchemaLabel;
+	private JTextField serverTxt, usernameTxt, ftpServerTxt, ftpUsernameTxt, mySQLServerTxt, mySQLUsernameTxt, mySQLSchemaTxt;
 	private JPasswordField apiKeyTxt, ftpPasswordTxt, mySQLPasswordTxt;
 	private JButton saveButton, loginButton;
 
@@ -30,7 +29,8 @@ public class LoginPanel extends JPanel {
 		this.c = c;
 		Properties loginPresets = c.getLoginPresets();
 
-		info = new JLabel("<html>Shopware Upload Tool - 2015, Sebastian Wieland<br>Bitte geben Sie die Zugangsdaten zu Ihren Shopware-Shop an:</html>");
+		info = new JLabel(
+				"<html>Shopware Upload Tool - 2015, Sebastian Wieland<br>Bitte geben Sie die Zugangsdaten zu Ihren Shopware-Shop an:</html>");
 		serverLabel = new JLabel("Shopware-Server");
 		usernameLabel = new JLabel("Shopware-Benutzername");
 		apiKeyLabel = new JLabel("Shopware-Api-Schlüssel");
@@ -178,12 +178,12 @@ public class LoginPanel extends JPanel {
 		layout.putConstraint(SpringLayout.BASELINE, mySQLSchemaTxt, 0, SpringLayout.BASELINE, mySQLSchemaLabel);
 		layout.putConstraint(SpringLayout.EAST, mySQLSchemaTxt, 0, SpringLayout.EAST, serverTxt);
 		this.add(mySQLSchemaTxt);
-		
+
 		layout.putConstraint(SpringLayout.WEST, loginButton, 10, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.SOUTH, loginButton, -10, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.EAST, loginButton, -10, SpringLayout.EAST, this);
 		this.add(loginButton);
-		
+
 		layout.putConstraint(SpringLayout.WEST, saveButton, 0, SpringLayout.WEST, loginButton);
 		layout.putConstraint(SpringLayout.SOUTH, saveButton, -5, SpringLayout.NORTH, loginButton);
 		layout.putConstraint(SpringLayout.EAST, saveButton, 0, SpringLayout.EAST, loginButton);
@@ -205,7 +205,7 @@ public class LoginPanel extends JPanel {
 		c.setLoginPresets(loginPresets);
 		c.saveLoginPresets();
 	}
-	
+
 	private void login() {
 		LoginInformation i = new LoginInformation();
 		i.swServer = serverTxt.getText();
@@ -218,10 +218,10 @@ public class LoginPanel extends JPanel {
 		i.mySqlUsername = mySQLUsernameTxt.getText();
 		i.mySqlPassword = new String(mySQLPasswordTxt.getPassword());
 		i.mySqlSchema = mySQLSchemaTxt.getText();
-		
+
 		c.login(i);
 	}
-	
+
 	public class LoginInformation {
 		public String swServer;
 		public String swUsername;

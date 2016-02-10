@@ -65,8 +65,7 @@ public class DownloadTab extends Tab {
 		sourceFileBtn = new JButton("Quelldatei öffnen");
 		outputFileBtn = new JButton("Ausgabe-Datei auswählen");
 
-		sourceFileLabel = new JLabel(
-				"Eine Datei mit bestimmten Artikeln, deren Informationen Sie herunterladen möchten.");
+		sourceFileLabel = new JLabel("Eine Datei mit bestimmten Artikeln, deren Informationen Sie herunterladen möchten.");
 		outputFileLabel = new JLabel("Speicherort, wo die heruntergeladenen Artikel gespeichert werden sollen.");
 
 		sourceFileTxt = new JTextField();
@@ -78,8 +77,7 @@ public class DownloadTab extends Tab {
 		downloadBtn
 				.setToolTipText("Alle Artikel, die in der Quelldatei angegeben sind, werden heruntergeladen. Falls ein Artikel auf Shopware nicht existiert, wird das in der Fehler-Datei vermerkt.");
 		downloadAllBtn = new JButton("Alle Artikel herunterladen");
-		downloadAllBtn
-				.setToolTipText("Alle Artikel, die sich auf Shopware befinden, herunterladen. Die Quelldatei wird ignoriert.");
+		downloadAllBtn.setToolTipText("Alle Artikel, die sich auf Shopware befinden, herunterladen. Die Quelldatei wird ignoriert.");
 		abortBtn = new JButton("Download abbrechen");
 		abortBtn.setEnabled(false);
 
@@ -173,8 +171,7 @@ public class DownloadTab extends Tab {
 	}
 
 	private void selectSourceFile() {
-		File f = c.selectFile("source.xlsx", false, new Filetype[] { Filetype.XLS_ALL, Filetype.XLSX, Filetype.XLSX_MS,
-				Filetype.XLS });
+		File f = c.selectFile("source.xlsx", false, new Filetype[] { Filetype.XLS_ALL, Filetype.XLSX, Filetype.XLSX_MS, Filetype.XLS });
 		if (f != null)
 			sourceFileTxt.setText(f.getAbsolutePath());
 	}

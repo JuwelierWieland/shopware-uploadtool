@@ -41,8 +41,7 @@ import com.alee.laf.WebLookAndFeel;
 
 public class Controller {
 
-	private static final String LOGINPRESETS_FILENAME = System.getProperty("user.home")
-			+ "/.shopwareUploadToolProperties.xml";
+	private static final String LOGINPRESETS_FILENAME = System.getProperty("user.home") + "/.shopwareUploadToolProperties.xml";
 	private Properties loginPresets;
 	private LoginInformation loginInformation;
 
@@ -54,8 +53,7 @@ public class Controller {
 
 	private int runningActions = 0;
 
-	private static final int UPLOAD_NEW = 1, UPDATE = 2, DOWNLOAD = 4, DOWNLOAD_ALL = 8, DELETE = 16,
-			UPDATE_STOCK = 32;
+	private static final int UPLOAD_NEW = 1, UPDATE = 2, DOWNLOAD = 4, DOWNLOAD_ALL = 8, DELETE = 16, UPDATE_STOCK = 32;
 
 	public enum Filetype {
 		XLS_ALL(new FileNameExtensionFilter("Alle Excel-Dateitypen (.xlsx, .xls)", "xlsx", "xls")), XLSX(new FileNameExtensionFilter(
@@ -82,11 +80,9 @@ public class Controller {
 		try {
 			loginPresets.loadFromXML(new FileInputStream(LOGINPRESETS_FILENAME));
 		} catch (FileNotFoundException e) {
-			JOptionPane.showMessageDialog(w, "Keine Login-Properties-Datei gefunden.", "Login",
-					JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Keine Login-Properties-Datei gefunden.", "Login", JOptionPane.WARNING_MESSAGE);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(w, "Unbekannter Fehler: " + e + "\nProgramm wird beendet.", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Unbekannter Fehler: " + e + "\nProgramm wird beendet.", "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 
 		w = new SWWindow(this);
@@ -94,12 +90,9 @@ public class Controller {
 		exitListener = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				JOptionPane
-						.showMessageDialog(
-								w,
-								"Mindestens ein Übertragungsvorgang ist noch aktiv."
-										+ "\nBitte warten Sie auf dessen Beendigung oder brechen Sie diesen ab, bevor Sie dieses Fenster schließen.",
-								"Übertragung aktiv", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(w, "Mindestens ein Übertragungsvorgang ist noch aktiv."
+						+ "\nBitte warten Sie auf dessen Beendigung oder brechen Sie diesen ab, bevor Sie dieses Fenster schließen.",
+						"Übertragung aktiv", JOptionPane.WARNING_MESSAGE);
 			}
 		};
 	}
@@ -128,14 +121,13 @@ public class Controller {
 				else
 					return;
 			} catch (FileNotFoundException e) {
-				JOptionPane.showMessageDialog(w, "Datei kann nicht gespeichert werden: Ein Ordner mit dem Namen \""
-						+ LOGINPRESETS_FILENAME + "\" existiert bereits.", "Login", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(w, "Datei kann nicht gespeichert werden: Ein Ordner mit dem Namen \"" + LOGINPRESETS_FILENAME
+						+ "\" existiert bereits.", "Login", JOptionPane.WARNING_MESSAGE);
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(w, "Unbekannter Fehler: " + e + "\nProgramm wird beendet.", "Fehler",
 						JOptionPane.ERROR_MESSAGE);
 			}
-			JOptionPane.showMessageDialog(w, "Einstellungen erfolgreich gespeichert.", "Erfolg",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Einstellungen erfolgreich gespeichert.", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -153,8 +145,7 @@ public class Controller {
 		try {
 			apiConnector = new ApiConnector(i.swServer, i.swUsername, i.swApiKey);
 		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(w, "Die Eingegebenen Informationen sind ungültig.", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Die Eingegebenen Informationen sind ungültig.", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		w.setDisplayedPanel(new TabContainer(this));
@@ -164,15 +155,14 @@ public class Controller {
 	private boolean confirmSave(File file) {
 		if (file.isFile()) {
 			int selection = JOptionPane.showConfirmDialog(w, "Eine Datei \"" + file.getAbsolutePath()
-					+ "\" existiert bereits. Möchen Sie diese überschreiben?", "Bestätigung",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+					+ "\" existiert bereits. Möchen Sie diese überschreiben?", "Bestätigung", JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
 			if (selection == JOptionPane.YES_OPTION)
 				return true;
 			else
 				return false;
 		} else if (file.isDirectory()) {
-			JOptionPane.showMessageDialog(w,
-					"Ein Ordner mit dem Namen existiert bereits. Datei kann nicht gespeichert werden.", "Fehler",
+			JOptionPane.showMessageDialog(w, "Ein Ordner mit dem Namen existiert bereits. Datei kann nicht gespeichert werden.", "Fehler",
 					JOptionPane.WARNING_MESSAGE);
 			return false;
 		} else {
@@ -228,8 +218,7 @@ public class Controller {
 
 	public void upload(Tab callingTab, UploadInformation info) {
 		if (info.importFile == null || !info.importFile.isFile() || info.errorFile == null) {
-			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		callingTab.lock();
@@ -253,8 +242,7 @@ public class Controller {
 
 	public void update(Tab callingTab, UploadInformation info) {
 		if (info.importFile == null || !info.importFile.isFile() || info.errorFile == null) {
-			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		callingTab.lock();
@@ -278,8 +266,7 @@ public class Controller {
 
 	public void download(Tab callingTab, DownloadInformation info) {
 		if (info.sourceFile == null || !info.sourceFile.isFile() || info.destFile == null) {
-			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		callingTab.lock();
@@ -297,8 +284,7 @@ public class Controller {
 
 	public void downloadAll(Tab callingTab, DownloadInformation info) {
 		if (info.destFile == null) {
-			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		callingTab.lock();
@@ -316,8 +302,7 @@ public class Controller {
 
 	public void delete(Tab callingTab, DeleteInformation info) {
 		if (info.toDelete == null || !info.toDelete.isFile() || info.errors == null) {
-			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -344,8 +329,7 @@ public class Controller {
 
 	public void updateStocks(Tab callingTab, UpdateStockInformation info) {
 		if (info.topMFile == null || !info.topMFile.isFile() || info.errorFile == null) {
-			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(w, "Bitte wählen Sie gültige Dateien aus", "Fehler", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -365,8 +349,7 @@ public class Controller {
 		new Thread() {
 			public void run() {
 				processor.start();
-				info.statusPanel.setStatus("Bestandsupdate läuft seit "
-						+ new SimpleDateFormat("HH:mm:ss").format(new Date()));
+				info.statusPanel.setStatus("Bestandsupdate läuft seit " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
 				while (processor.isAlive()) {
 					try {
 						Thread.sleep(1000);
@@ -380,8 +363,8 @@ public class Controller {
 					info.statusPanel.setRemainingTime(status.getEstimatedRemainingTime());
 				}
 
-				info.statusPanel.setStatus("Bestandsupdate beendet - " + status.getDone() + " von " + status.getTodo()
-						+ " in " + StatusPanel.formatTime(status.getPassedTime()) + " übertragen");
+				info.statusPanel.setStatus("Bestandsupdate beendet - " + status.getDone() + " von " + status.getTodo() + " in "
+						+ StatusPanel.formatTime(status.getPassedTime()) + " übertragen");
 				errorCreator.saveAs(info.errorFile);
 				callingTab.unlock();
 				unlockWindow(UPDATE_STOCK);
@@ -406,8 +389,7 @@ public class Controller {
 
 		ExcelCreator writer = new ExcelCreator(true);
 
-		ArticleProcessor processor = new ArticleProcessor(apiConnector, reader, writer, info.mode, status,
-				loginInformation);
+		ArticleProcessor processor = new ArticleProcessor(apiConnector, reader, writer, info.mode, status, loginInformation);
 
 		info.statusPanel.reset();
 		info.statusPanel.setStatus(info.mode + " läuft seit " + new SimpleDateFormat("HH:mm:ss").format(new Date()));

@@ -8,9 +8,13 @@ public abstract class Tab extends JPanel {
 
 	@Deprecated
 	public abstract boolean isCloseable();
+
 	public abstract String getTitle();
+
 	public abstract void lock();
+
 	public abstract void unlock();
+
 	public abstract JButton getCancelButton();
-	
+
 }

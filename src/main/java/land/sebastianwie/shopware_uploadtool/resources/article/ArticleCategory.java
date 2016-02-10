@@ -66,7 +66,7 @@ public class ArticleCategory implements ToJsonConvertible {
 			return false;
 		return true;
 	}
-	
+
 	public static ArticleCategory createFromJSONObject(JSONObject data) {
 		if (data == null)
 			return null;
@@ -97,7 +97,7 @@ public class ArticleCategory implements ToJsonConvertible {
 	public String toString() {
 		return Integer.toString(id) + (categoryName != null ? " (" + categoryName + ")" : "");
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(Arrays.toString(createFromString("123 (asdf)")));
 	}

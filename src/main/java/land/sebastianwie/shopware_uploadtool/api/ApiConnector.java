@@ -15,22 +15,26 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Der {@link ApiConnector} stellt die Br&uuml;cke zwischen {@link JSONObject}s und Java-Objekten dar.
+ * Der {@link ApiConnector} stellt die Br&uuml;cke zwischen {@link JSONObject}s
+ * und Java-Objekten dar.
  * 
  * @author Sebastian Wieland
  *
  */
 public class ApiConnector {
-	// private static final String hostname = "shopware.p223131.webspaceconfig.de";
-	// private static final String hostname = "shopware.p234623.webspaceconfig.de";
+	// private static final String hostname =
+	// "shopware.p223131.webspaceconfig.de";
+	// private static final String hostname =
+	// "shopware.p234623.webspaceconfig.de";
 	// private static final String username = "wieland";
-	// private static final String password = "seZ45bdcRF023J4GHVftogFAL6F909XtcrJLMc0l";
+	// private static final String password =
+	// "seZ45bdcRF023J4GHVftogFAL6F909XtcrJLMc0l";
 
-	private static final List<NameValuePair> use_number = Arrays
-			.asList(new BasicNameValuePair[] { new BasicNameValuePair("useNumberAsId", "true") });
+	private static final List<NameValuePair> use_number = Arrays.asList(new BasicNameValuePair[] { new BasicNameValuePair("useNumberAsId",
+			"true") });
 
-	private static final List<NameValuePair> consider_tax = Arrays
-			.asList(new BasicNameValuePair[] { new BasicNameValuePair("considerTaxInput", "true") });
+	private static final List<NameValuePair> consider_tax = Arrays.asList(new BasicNameValuePair[] { new BasicNameValuePair(
+			"considerTaxInput", "true") });
 
 	private static final List<NameValuePair> number_and_tax = Arrays.asList(new BasicNameValuePair[] {
 			new BasicNameValuePair("considerTaxInput", "true"), new BasicNameValuePair("useNumberAsId", "true") });
@@ -48,8 +52,9 @@ public class ApiConnector {
 	 * F&uuml;gt einen neuen Artikel hinzu.
 	 * 
 	 * @param article
-	 *            Der neue Artikel. Ein Artikel besteht aus mindestens einem Namen, einer Nummer und einer TaxId
-	 *            (Standardm&auml;&szlig;ig 1).
+	 *            Der neue Artikel. Ein Artikel besteht aus mindestens einem
+	 *            Namen, einer Nummer und einer TaxId (Standardm&auml;&szlig;ig
+	 *            1).
 	 * @return Bei Erfolg: Die Shopware ID des Artikels. Sonst: -1
 	 * @throws IOException
 	 * @throws ClientProtocolException
@@ -79,7 +84,8 @@ public class ApiConnector {
 	 *            Die Shopware-ID des Artikels, der aktualisiert werden soll.
 	 * @param article
 	 *            Die &Auml;nderungen, die am Artikel vorgenommen werden.
-	 * @return null, falls die &Auml;nderung erfolgreich war, sonst die Fehlermeldung.
+	 * @return null, falls die &Auml;nderung erfolgreich war, sonst die
+	 *         Fehlermeldung.
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
@@ -98,12 +104,12 @@ public class ApiConnector {
 	 *            Die Artikelnummer des Artikels, der aktualisiert werden soll.
 	 * @param article
 	 *            Die &Auml;nderungen, die am Artikel vorgenommen werden.
-	 * @return null, falls die &Auml;nderung erfolgreich war, sonst die Fehlermeldung.
+	 * @return null, falls die &Auml;nderung erfolgreich war, sonst die
+	 *         Fehlermeldung.
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
-	public ArticleUploadStatus updateArticle(String number, Article article) throws ClientProtocolException,
-			IOException {
+	public ArticleUploadStatus updateArticle(String number, Article article) throws ClientProtocolException, IOException {
 		JSONObject result = ac.put("articles/" + number, article.toJSONObject(), use_number);
 		if (result.getBoolean("success"))
 			return new ArticleUploadStatus(result.getJSONObject("data").getInt("id"), "Update successful");
@@ -111,8 +117,7 @@ public class ApiConnector {
 			return new ArticleUploadStatus(-1, result.getString("message"));
 	}
 
-	public ArticleUploadStatus updateVariant(int id, ArticleVariant variant) throws ClientProtocolException,
-			IOException {
+	public ArticleUploadStatus updateVariant(int id, ArticleVariant variant) throws ClientProtocolException, IOException {
 		JSONObject result = ac.put("variants/" + id, variant.toJSONObject());
 		if (result.getBoolean("success"))
 			return new ArticleUploadStatus(result.getJSONObject("data").getInt("id"), "Update successful");
@@ -120,8 +125,7 @@ public class ApiConnector {
 			return new ArticleUploadStatus(-1, result.getString("message"));
 	}
 
-	public ArticleUploadStatus updateVariant(String number, ArticleVariant variant) throws ClientProtocolException,
-			IOException {
+	public ArticleUploadStatus updateVariant(String number, ArticleVariant variant) throws ClientProtocolException, IOException {
 		JSONObject result = ac.put("variants/" + number, variant.toJSONObject(), use_number);
 		if (result.getBoolean("success"))
 			return new ArticleUploadStatus(result.getJSONObject("data").getInt("id"), "Update successful");
@@ -134,7 +138,8 @@ public class ApiConnector {
 	 * 
 	 * @param id
 	 *            Die Shopware-ID des Artikels, der gel&ouml;scht werden soll.
-	 * @return null, falls das L&ouml;schen erfolgreich war, sonst diei Fehlermeldung.
+	 * @return null, falls das L&ouml;schen erfolgreich war, sonst diei
+	 *         Fehlermeldung.
 	 * @throws IOException
 	 * @throws ClientProtocolException
 	 */
@@ -151,17 +156,20 @@ public class ApiConnector {
 	 * 
 	 * @param number
 	 *            Die Artikelnummer des Artikels, der gel&ouml;scht werden soll.
-	 * @return null, falls das L&ouml;schen erfolgreich war, sonst diei Fehlermeldung.
+	 * @return null, falls das L&ouml;schen erfolgreich war, sonst diei
+	 *         Fehlermeldung.
 	 * @throws IOException
 	 * @throws ClientProtocolException
-	 * @deprecated Da Shopware nicht das L&ouml;schen &uuml;ber die Artikelnummer unterst&uuml;tzt, werden hierf&uuml;r
-	 *             zwei Requests ausgef&uuml;hrt: Einer, um die ID herauszufinden und einer, um eben diesen Artikel zu
-	 *             l&ouml;schen.
+	 * @deprecated Da Shopware nicht das L&ouml;schen &uuml;ber die
+	 *             Artikelnummer unterst&uuml;tzt, werden hierf&uuml;r zwei
+	 *             Requests ausgef&uuml;hrt: Einer, um die ID herauszufinden und
+	 *             einer, um eben diesen Artikel zu l&ouml;schen.
 	 */
 	@Deprecated
 	public String deleteArticle(String number) throws ClientProtocolException, IOException {
 		// JSONObject result = ac.delete("articles/" + number, use_number);
-		// Shopware unterstützt derzeit kein Löschen nach Nummer, deshalb hier eine hässliche Lösung
+		// Shopware unterstützt derzeit kein Löschen nach Nummer, deshalb hier
+		// eine hässliche Lösung
 		Article toDelete = getArticle(number);
 		if (toDelete == null)
 			return "Unbekannter Fehler";
@@ -217,8 +225,7 @@ public class ApiConnector {
 	}
 
 	public int getArticleCount() throws ClientProtocolException, IOException {
-		List<NameValuePair> parameters = Arrays.asList(new BasicNameValuePair[] {
-				new BasicNameValuePair("start", Integer.toString(0)),
+		List<NameValuePair> parameters = Arrays.asList(new BasicNameValuePair[] { new BasicNameValuePair("start", Integer.toString(0)),
 				new BasicNameValuePair("limit", Integer.toString(0)) });
 
 		JSONObject result = ac.get("articles", parameters);
@@ -254,8 +261,7 @@ public class ApiConnector {
 	 * @throws ClientProtocolException
 	 */
 	public Article[] getArticles(int start, int limit) throws ClientProtocolException, IOException {
-		List<NameValuePair> parameters = Arrays.asList(new BasicNameValuePair[] {
-				new BasicNameValuePair("start", Integer.toString(start)),
+		List<NameValuePair> parameters = Arrays.asList(new BasicNameValuePair[] { new BasicNameValuePair("start", Integer.toString(start)),
 				new BasicNameValuePair("limit", Integer.toString(limit)) });
 		JSONObject result = ac.get("articles", parameters);
 		if (!result.getBoolean("success"))
@@ -267,5 +273,5 @@ public class ApiConnector {
 		}
 		return output;
 	}
-	
+
 }

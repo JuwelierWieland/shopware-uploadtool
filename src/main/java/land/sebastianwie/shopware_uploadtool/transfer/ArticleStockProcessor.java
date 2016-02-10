@@ -20,8 +20,7 @@ public class ArticleStockProcessor extends Thread {
 
 	private static final String SUPPLIERS_FILE = System.getProperty("user.home") + "/.shopwareUploadToolSuppliers.xml";
 
-	public ArticleStockProcessor(ExcelCreator errorCreator, ProcessStatus status, TopmArticleList source,
-			LoginInformation info) {
+	public ArticleStockProcessor(ExcelCreator errorCreator, ProcessStatus status, TopmArticleList source, LoginInformation info) {
 		this.errorCreator = errorCreator;
 		this.status = status;
 		this.source = source;
@@ -36,10 +35,8 @@ public class ArticleStockProcessor extends Thread {
 			try {
 				mapper = new SupplierMapper(DocumentUtils.fromURL(SUPPLIERS_FILE));
 			} catch (Exception e) {
-				errorCreator.addArticle(
-						new Article(),
-						"Fehler: Keine Supplier-Mapper Datei vorhanden (~/.shopwareUploadToolSuppliers.xml)\n"
-								+ e.getMessage());
+				errorCreator.addArticle(new Article(),
+						"Fehler: Keine Supplier-Mapper Datei vorhanden (~/.shopwareUploadToolSuppliers.xml)\n" + e.getMessage());
 				this.status.setTodo(1);
 				this.status.setErrors(1);
 				this.status.setDone(1);
@@ -65,8 +62,8 @@ public class ArticleStockProcessor extends Thread {
 				this.status.incDone();
 			}
 
-			//status.setTodo(2);
-			//Map<String, Article> articleMap = new HashMap<>();
+			// status.setTodo(2);
+			// Map<String, Article> articleMap = new HashMap<>();
 			// articleMap.put("22-FS4813", ac.getArticle("22-FS4813"));
 
 			for (TopMArticle topmarticle : source) {
@@ -74,11 +71,11 @@ public class ArticleStockProcessor extends Thread {
 					break;
 				Article converted = topmarticle.toArticle(mapper);
 				if (converted == null) {
-					//this.status.incDone();
+					// this.status.incDone();
 					continue;
 				} else if (articleMap.get(converted.getNumber()) == null) {
-					//this.status.incDone();
-					//this.status.decTodo();
+					// this.status.incDone();
+					// this.status.decTodo();
 					continue;
 				} else if (articleMap.get(converted.getNumber()).equals(converted.getInStock())) {
 					this.status.incDone();

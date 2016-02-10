@@ -52,17 +52,17 @@ public class ArticleDetail implements ToJsonConvertible {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public int getPseudoId() {
 		if (id != -1)
 			return id;
 		return pseudoId;
 	}
-	
+
 	public void setPseudoId(int pseudoId) {
 		this.pseudoId = pseudoId;
 	}
@@ -420,8 +420,7 @@ public class ArticleDetail implements ToJsonConvertible {
 		if (data.has("configuratorOptions") && !data.isNull("configuratorOptions")) {
 			JSONArray configuratorOptions = data.getJSONArray("configuratorOptions");
 			for (int i = 0; i < configuratorOptions.length(); i++) {
-				result.addConfiguratorOption(ArticleConfiguratorOption.createFromJSONObject(configuratorOptions
-						.getJSONObject(i)).convert());
+				result.addConfiguratorOption(ArticleConfiguratorOption.createFromJSONObject(configuratorOptions.getJSONObject(i)).convert());
 			}
 		}
 

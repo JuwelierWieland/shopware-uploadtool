@@ -113,7 +113,7 @@ public class StatusPanel extends JPanel {
 		this.setElapsedTime(0);
 		this.setRemainingTime(0);
 	}
-	
+
 	public void setStatus(String text) {
 		statusTxt.setText(text);
 	}

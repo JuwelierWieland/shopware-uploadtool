@@ -36,20 +36,19 @@ public class ExcelCreator {
 	private int vRow;
 
 	/**
-	 * Reihenfolge der Spalten in den Excel-Tabellen, die erstellt werden. Nutzer haben sich nicht an die Reihenfolge zu
-	 * halten und können Spalten anordnen, wie sie wollen.
+	 * Reihenfolge der Spalten in den Excel-Tabellen, die erstellt werden.
+	 * Nutzer haben sich nicht an die Reihenfolge zu halten und können Spalten
+	 * anordnen, wie sie wollen.
 	 */
-	private static final TableColumn[] order = { TableColumn.ID, TableColumn.NUMBER, TableColumn.PARENT_ID,
-			TableColumn.PARENT_NUMBER, TableColumn.ACTIVE, TableColumn.CONFIGURATOR_GROUPS, TableColumn.VARIANT,
-			TableColumn.VARIANT_ACTIVE, TableColumn.ERRORS, TableColumn.NEW_NUMBER, TableColumn.HIGHLIGHT,
-			TableColumn.SUPPLIER, TableColumn.EAN, TableColumn.NAME, TableColumn.DESCRIPTION,
-			TableColumn.DESCRIPTION_LONG, TableColumn.ADDITIONAL_TEXT, TableColumn.PRICES,
-			TableColumn.OPTION_REPLACE_PRICES, TableColumn.CUSTOM_PRODUCTS, TableColumn.ATTR18, TableColumn.TEMPLATE,
-			TableColumn.KEYWORDS, TableColumn.CATEGORIES, TableColumn.OPTION_REPLACE_CATEGORIES,
-			TableColumn.FILTER_GROUP, TableColumn.PROPERTY_VALUES, TableColumn.IN_STOCK, TableColumn.STOCK_MIN,
-			TableColumn.SHIPPING_FREE, TableColumn.AVAILABLE_FROM, TableColumn.RELEASE_DATE, TableColumn.SHIPPING_TIME,
-			TableColumn.NOTIFICATION, TableColumn.PACK_UNIT, TableColumn.PURCHASE_UNIT, TableColumn.REFERENCE_UNIT,
-			TableColumn.HEIGHT, TableColumn.WIDTH, TableColumn.WEIGHT, TableColumn.TAX_ID, TableColumn.IMAGES,
+	private static final TableColumn[] order = { TableColumn.ID, TableColumn.NUMBER, TableColumn.PARENT_ID, TableColumn.PARENT_NUMBER,
+			TableColumn.ACTIVE, TableColumn.CONFIGURATOR_GROUPS, TableColumn.VARIANT, TableColumn.VARIANT_ACTIVE, TableColumn.ERRORS,
+			TableColumn.NEW_NUMBER, TableColumn.HIGHLIGHT, TableColumn.SUPPLIER, TableColumn.EAN, TableColumn.NAME,
+			TableColumn.DESCRIPTION, TableColumn.DESCRIPTION_LONG, TableColumn.ADDITIONAL_TEXT, TableColumn.PRICES,
+			TableColumn.OPTION_REPLACE_PRICES, TableColumn.CUSTOM_PRODUCTS, TableColumn.ATTR18, TableColumn.TEMPLATE, TableColumn.KEYWORDS,
+			TableColumn.CATEGORIES, TableColumn.OPTION_REPLACE_CATEGORIES, TableColumn.FILTER_GROUP, TableColumn.PROPERTY_VALUES,
+			TableColumn.IN_STOCK, TableColumn.STOCK_MIN, TableColumn.SHIPPING_FREE, TableColumn.AVAILABLE_FROM, TableColumn.RELEASE_DATE,
+			TableColumn.SHIPPING_TIME, TableColumn.NOTIFICATION, TableColumn.PACK_UNIT, TableColumn.PURCHASE_UNIT,
+			TableColumn.REFERENCE_UNIT, TableColumn.HEIGHT, TableColumn.WIDTH, TableColumn.WEIGHT, TableColumn.TAX_ID, TableColumn.IMAGES,
 			TableColumn.OPTION_REPLACE_IMAGES };
 
 	public ExcelCreator() {
@@ -60,7 +59,8 @@ public class ExcelCreator {
 	 * Erstellt einen neuen ExcelCreator.
 	 * 
 	 * @param withErrors
-	 *            Gibt an, ob eine "Fehlerursache"-Spalte mit erstellt werden soll.
+	 *            Gibt an, ob eine "Fehlerursache"-Spalte mit erstellt werden
+	 *            soll.
 	 */
 	public ExcelCreator(boolean withErrors) {
 		this.withErrors = withErrors;

@@ -47,10 +47,12 @@ public class ArticlePrice implements ToJsonConvertible {
 	 * @param price
 	 *            Der Preis des Produkts
 	 * @param from
-	 *            Das Minimum an Artikeln, die bestellt werden m&uuml;ssen, damit dieser Preis zustande kommt.
+	 *            Das Minimum an Artikeln, die bestellt werden m&uuml;ssen,
+	 *            damit dieser Preis zustande kommt.
 	 * @param to
-	 *            Das Maximum an Artikeln, die bestellt werden d&uuml;rfen, damit dieser Preis zustande kommt. 0 oder
-	 *            negative Werte bedeuten, dass es kein Maximum gibt.
+	 *            Das Maximum an Artikeln, die bestellt werden d&uuml;rfen,
+	 *            damit dieser Preis zustande kommt. 0 oder negative Werte
+	 *            bedeuten, dass es kein Maximum gibt.
 	 */
 	public ArticlePrice(double price, int from, int to) {
 		this(price, from, to, price, "EK");
@@ -62,14 +64,17 @@ public class ArticlePrice implements ToJsonConvertible {
 	 * @param price
 	 *            Der Preis des Produkts
 	 * @param from
-	 *            Das Minimum an Artikeln, die bestellt werden m&uuml;ssen, damit dieser Preis zustande kommt.
+	 *            Das Minimum an Artikeln, die bestellt werden m&uuml;ssen,
+	 *            damit dieser Preis zustande kommt.
 	 * @param to
-	 *            Das Maximum an Artikeln, die bestellt werden d&uuml;rfen, damit dieser Preis zustande kommt. 0 oder
-	 *            negative Werte bedeuten, dass es kein Maximum gibt.
+	 *            Das Maximum an Artikeln, die bestellt werden d&uuml;rfen,
+	 *            damit dieser Preis zustande kommt. 0 oder negative Werte
+	 *            bedeuten, dass es kein Maximum gibt.
 	 * @param pseudoPrice
 	 *            Der Pseudopreis des Artikels
 	 * @param customerGroupKey
-	 *            Die Identifikation der K&auml;ufergruppe. Standardm&auml;&szlig;ig ist dies &quot;EK&quot;
+	 *            Die Identifikation der K&auml;ufergruppe.
+	 *            Standardm&auml;&szlig;ig ist dies &quot;EK&quot;
 	 */
 	public ArticlePrice(double price, int from, int to, double pseudoPrice, String customerGroupKey) {
 		if (pseudoPrice == 0)
@@ -141,25 +146,24 @@ public class ArticlePrice implements ToJsonConvertible {
 		String[] lines = arg0.split("\n");
 		Set<ArticlePrice> prices = new HashSet<>();
 		// @f:off
-		Pattern p = Pattern.compile(
-				  "(?<euro>\\d*)"			// Euro (Zahl)
-				+ "((\\.|,)?"				// [ Komma oder Punkt
-				+ "(?<cent>\\d{1,2}))?"		//   Cent (Zahl, 1 oder 2 stellen) ]
-				+ "(\\s+\\("				// [ Whitespace, Klammer auf
-				+ "(?<peuro>\\d*)"			//   Euro (Zahl)
-				+ "((\\.|,)?"				//   [ Komma oder Punkt
-				+ "(?<pcent>\\d{1,2}))?"	//     Cent (Zahl, 1 oder 2 Stellen) ]
-				+ "\\))?"					//   Klammer zu ]
-				+ "(\\s+"					// [ Whitespace
-				+ "(?<from>\\d+)"			//   Von (Zahl)
-				+ "\\s*\\-\\>\\s*"			//   [Whitespace], "->", [Whitespace]
-				+ "(?<to>(\\d+|[X]))"		//   Bis (Zahl oder X (für "beliebig"))
-				+ ")?"						//   ]
-				+ "(\\s+"                   // [ Whitespace
-				+ "\\["						//   Eckige Klammer auf
-				+ "(?<ckey>\\w+)"			//   Customer-Group-Key
-				+ "\\]"						//   Eckige Klammer zu
-				+ ")?"						//   ]
+		Pattern p = Pattern.compile("(?<euro>\\d*)" // Euro (Zahl)
+				+ "((\\.|,)?" // [ Komma oder Punkt
+				+ "(?<cent>\\d{1,2}))?" // Cent (Zahl, 1 oder 2 stellen) ]
+				+ "(\\s+\\(" // [ Whitespace, Klammer auf
+				+ "(?<peuro>\\d*)" // Euro (Zahl)
+				+ "((\\.|,)?" // [ Komma oder Punkt
+				+ "(?<pcent>\\d{1,2}))?" // Cent (Zahl, 1 oder 2 Stellen) ]
+				+ "\\))?" // Klammer zu ]
+				+ "(\\s+" // [ Whitespace
+				+ "(?<from>\\d+)" // Von (Zahl)
+				+ "\\s*\\-\\>\\s*" // [Whitespace], "->", [Whitespace]
+				+ "(?<to>(\\d+|[X]))" // Bis (Zahl oder X (für "beliebig"))
+				+ ")?" // ]
+				+ "(\\s+" // [ Whitespace
+				+ "\\[" // Eckige Klammer auf
+				+ "(?<ckey>\\w+)" // Customer-Group-Key
+				+ "\\]" // Eckige Klammer zu
+				+ ")?" // ]
 		);
 		// @f:on
 		for (String line : lines) {

@@ -204,7 +204,11 @@ public class ExcelReader {
 									result.setSupplierId((int) cell.getNumericCellValue());
 								break;
 							case EAN:
-								cell.setCellType(Cell.CELL_TYPE_STRING); // Long reicht nicht, double ungenau
+								cell.setCellType(Cell.CELL_TYPE_STRING); // Long
+																			// reicht
+																			// nicht,
+																			// double
+																			// ungenau
 								result.setEan(cell.getStringCellValue().trim());
 								break;
 							case NAME:
@@ -229,15 +233,13 @@ public class ExcelReader {
 								break;
 							case KEYWORDS:
 								cell.setCellType(Cell.CELL_TYPE_STRING);
-								result.setKeywords(new HashSet<String>(Arrays.asList(cell.getStringCellValue().trim()
-										.split(","))));
+								result.setKeywords(new HashSet<String>(Arrays.asList(cell.getStringCellValue().trim().split(","))));
 								break;
 							case CATEGORIES:
 								if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
 									result.addCategory(new ArticleCategory((int) cell.getNumericCellValue()));
 								else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
-									result.setCategories(ArticleCategory.createFromString(cell.getStringCellValue()
-											.trim()));
+									result.setCategories(ArticleCategory.createFromString(cell.getStringCellValue().trim()));
 								break;
 							case FILTER_GROUP:
 								if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
@@ -245,8 +247,7 @@ public class ExcelReader {
 								break;
 							case PROPERTY_VALUES:
 								cell.setCellType(Cell.CELL_TYPE_STRING);
-								result.setPropertyValues(ArticleProperty.createFromString(cell.getStringCellValue()
-										.trim()));
+								result.setPropertyValues(ArticleProperty.createFromString(cell.getStringCellValue().trim()));
 								break;
 							case IN_STOCK:
 								if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
@@ -270,8 +271,11 @@ public class ExcelReader {
 									} catch (ParseException e) {
 									}
 								else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-									int daysSince1970 = (int) (cell.getNumericCellValue() - 25569); // 25569 = 1.1.1970
-																									// in excel
+									int daysSince1970 = (int) (cell.getNumericCellValue() - 25569); // 25569
+																									// =
+																									// 1.1.1970
+																									// in
+																									// excel
 									Calendar cal = Calendar.getInstance();
 									cal.setTimeInMillis(0);
 									cal.add(Calendar.DATE, daysSince1970);
@@ -285,8 +289,11 @@ public class ExcelReader {
 									} catch (ParseException e) {
 									}
 								else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-									int daysSince1970 = (int) (cell.getNumericCellValue() - 25569); // 25569 = 1.1.1970
-																									// in excel
+									int daysSince1970 = (int) (cell.getNumericCellValue() - 25569); // 25569
+																									// =
+																									// 1.1.1970
+																									// in
+																									// excel
 									Calendar cal = Calendar.getInstance();
 									cal.setTimeInMillis(0);
 									cal.add(Calendar.DATE, daysSince1970);
@@ -372,8 +379,7 @@ public class ExcelReader {
 								break;
 							case CONFIGURATOR_GROUPS:
 								cell.setCellType(Cell.CELL_TYPE_STRING);
-								result.setConfiguratorGroups(ArticleConfiguratorGroup.createFromString(cell
-										.getStringCellValue().trim()));
+								result.setConfiguratorGroups(ArticleConfiguratorGroup.createFromString(cell.getStringCellValue().trim()));
 								break;
 							case VARIANT:
 								cell.setCellType(Cell.CELL_TYPE_STRING);
@@ -460,8 +466,7 @@ public class ExcelReader {
 									result.getDetail().addPrice(new ArticlePrice(cell.getNumericCellValue()));
 								else {
 									cell.setCellType(Cell.CELL_TYPE_STRING);
-									result.getDetail().setPrices(
-											ArticlePrice.createFromString(cell.getStringCellValue().trim()));
+									result.getDetail().setPrices(ArticlePrice.createFromString(cell.getStringCellValue().trim()));
 								}
 								break;
 							case IN_STOCK:
@@ -491,8 +496,11 @@ public class ExcelReader {
 									} catch (ParseException e) {
 									}
 								else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-									int daysSince1970 = (int) (cell.getNumericCellValue() - 25569); // 25569 = 1.1.1970
-																									// in excel
+									int daysSince1970 = (int) (cell.getNumericCellValue() - 25569); // 25569
+																									// =
+																									// 1.1.1970
+																									// in
+																									// excel
 									Calendar cal = Calendar.getInstance();
 									cal.setTimeInMillis(0);
 									cal.add(Calendar.DATE, daysSince1970);

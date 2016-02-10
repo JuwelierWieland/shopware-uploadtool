@@ -117,18 +117,10 @@ public class ArticleConfiguratorOption implements ToJsonConvertible {
 		String[] lines = data.split("\n");
 		Set<ArticleConfiguratorOption> result = new HashSet<>();
 
-		//@f:off
-		Pattern p = Pattern.compile(
-				"("
-				+ "(?<groupId>\\d+):\\s*"
-				+ "(?<name>(\\S+)(\\s+\\S+)*)"
-				+ ")|("
-				+ "(?<group>(\\S+)(\\s+\\S+)*)"
-				+ "\\s*=\\s*"
-				+ "(?<option>(\\S+)(\\s+\\S+)*)"
-				+ ")"
-		);
-		//@f:on
+		// @f:off
+		Pattern p = Pattern.compile("(" + "(?<groupId>\\d+):\\s*" + "(?<name>(\\S+)(\\s+\\S+)*)" + ")|(" + "(?<group>(\\S+)(\\s+\\S+)*)"
+				+ "\\s*=\\s*" + "(?<option>(\\S+)(\\s+\\S+)*)" + ")");
+		// @f:on
 		for (String line : lines) {
 			Matcher m = p.matcher(line.trim());
 			if (!m.matches())

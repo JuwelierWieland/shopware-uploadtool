@@ -171,8 +171,7 @@ public class UploadTab extends Tab {
 	}
 
 	private void selectImportFile() {
-		File f = c.selectFile("import.xlsx", false, new Filetype[] { Filetype.XLS_ALL, Filetype.XLSX, Filetype.XLSX_MS,
-				Filetype.XLS });
+		File f = c.selectFile("import.xlsx", false, new Filetype[] { Filetype.XLS_ALL, Filetype.XLSX, Filetype.XLSX_MS, Filetype.XLS });
 		if (f != null)
 			importFileTxt.setText(f.getAbsolutePath());
 	}

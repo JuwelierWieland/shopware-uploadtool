@@ -5,7 +5,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
 public class DocumentUtils {
-	
+
 	public static Document fromURL(String url) {
 		SAXReader reader = new SAXReader();
 		Document result = null;

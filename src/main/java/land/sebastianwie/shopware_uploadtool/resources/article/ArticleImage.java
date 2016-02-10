@@ -41,8 +41,8 @@ public class ArticleImage implements ToJsonConvertible {
 	}
 
 	/**
-	 * Erstellt ein neues Bild. Das Bild wird bei Erfolg in Shopware hochgeladen, sodass man die Quelle
-	 * anschlie&szlig;end l&ouml;schen kann.
+	 * Erstellt ein neues Bild. Das Bild wird bei Erfolg in Shopware
+	 * hochgeladen, sodass man die Quelle anschlie&szlig;end l&ouml;schen kann.
 	 * 
 	 * @param link
 	 *            Der Pfad des Bildes.
@@ -60,15 +60,15 @@ public class ArticleImage implements ToJsonConvertible {
 	public void setMediaName(String mediaName) {
 		this.mediaName = mediaName;
 	}
-	
+
 	public int getMediaId() {
 		return mediaId;
 	}
-	
+
 	public boolean usesId() {
 		return useId;
 	}
-	
+
 	public boolean isMainImage() {
 		return mainImage;
 	}
@@ -108,22 +108,22 @@ public class ArticleImage implements ToJsonConvertible {
 		String[] lines = arg0.split("\n");
 		Set<ArticleImage> images = new HashSet<>();
 		// @f:off
-		Pattern p = Pattern.compile(
-				  "((?<main>\\Qmain:\\E)\\s+)?("	// [ "main:" Whitespace ]
-				+ "(?<id>\\d+)(\\s+\\(.*\\))?|"		// ID 
-				+ "(?<path>"						//     oder
-				+ "("								// [
-				+ "\\S+\\Q://\\E"					//   Protokoll
-				+ "\\S+"							//   Domain(unterstes level) oder IP(erste Zahl)
-				+ "(\\.\\S+)+"						//   Domain(alle anderen Level) oder IP(alle anderen Zahlen)
-				+ "\\/"								//   Slash
-				+ ")?"								// ]
-				+ "(\\S+)?"							// [ Relativer Pfad ]
-				+ "((\\/\\S+)*\\/)?"				// [ Subdirectories oder absoluter Pfad ]
-				+ "(\\S*\\.\\S+)"					// Datei mit Endung
-				+ ")"
-				+ ")"
-		);
+		Pattern p = Pattern.compile("((?<main>\\Qmain:\\E)\\s+)?(" // [ "main:"
+																	// Whitespace
+																	// ]
+				+ "(?<id>\\d+)(\\s+\\(.*\\))?|" // ID
+				+ "(?<path>" // oder
+				+ "(" // [
+				+ "\\S+\\Q://\\E" // Protokoll
+				+ "\\S+" // Domain(unterstes level) oder IP(erste Zahl)
+				+ "(\\.\\S+)+" // Domain(alle anderen Level) oder IP(alle
+								// anderen Zahlen)
+				+ "\\/" // Slash
+				+ ")?" // ]
+				+ "(\\S+)?" // [ Relativer Pfad ]
+				+ "((\\/\\S+)*\\/)?" // [ Subdirectories oder absoluter Pfad ]
+				+ "(\\S*\\.\\S+)" // Datei mit Endung
+				+ ")" + ")");
 		// @f:on
 		for (String line : lines) {
 			Matcher m = p.matcher(line.trim());
@@ -182,13 +182,12 @@ public class ArticleImage implements ToJsonConvertible {
 	@Override
 	public String toString() {
 		if (this.useId) {
-			return (mainImage ? "main: " : "") + Integer.toString(mediaId)
-					+ (mediaName != null ? " (" + mediaName + ")" : "");
+			return (mainImage ? "main: " : "") + Integer.toString(mediaId) + (mediaName != null ? " (" + mediaName + ")" : "");
 		} else {
 			return (mainImage ? "main: " : "") + link;
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println(Arrays.toString(createFromString("3242 (asdf)")));
 	}

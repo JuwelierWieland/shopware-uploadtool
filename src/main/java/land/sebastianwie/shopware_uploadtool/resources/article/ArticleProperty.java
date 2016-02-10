@@ -15,18 +15,19 @@ public class ArticleProperty implements ToJsonConvertible {
 
 	private int propertyId;
 	private boolean useId;
-	
+
 	public boolean usesId() {
 		return useId;
 	}
-	
+
 	public int getId() {
 		return propertyId;
 	}
 
 	/**
-	 * Erstellt eine neue Eigenschaft f&uuml; einen Artikel. Weder Eigenschaft, noch Eigenschaftswert m&uuml;ssen vorher
-	 * in Shopware vorhanden sein. Falls sie bereits vorhanden sind, werden diese nicht doppelt angelegt.
+	 * Erstellt eine neue Eigenschaft f&uuml; einen Artikel. Weder Eigenschaft,
+	 * noch Eigenschaftswert m&uuml;ssen vorher in Shopware vorhanden sein.
+	 * Falls sie bereits vorhanden sind, werden diese nicht doppelt angelegt.
 	 * 
 	 * @param propertyName
 	 *            Der Eigenschaftsname (z.B. Farbe)
@@ -44,8 +45,8 @@ public class ArticleProperty implements ToJsonConvertible {
 	}
 
 	/**
-	 * Erstellt eine neue Eigenschaft f&uuml;r einen Artikel. Die Eigenschaft muss dazu vorher bereits in Shopware
-	 * vorhanden sein.
+	 * Erstellt eine neue Eigenschaft f&uuml;r einen Artikel. Die Eigenschaft
+	 * muss dazu vorher bereits in Shopware vorhanden sein.
 	 * 
 	 * @param propertyId
 	 *            Die Shopware-ID der Eigenschaft
@@ -80,14 +81,12 @@ public class ArticleProperty implements ToJsonConvertible {
 		String[] lines = arg0.split("\n");
 		Set<ArticleProperty> properties = new HashSet<>();
 		// @f:off
-		Pattern p = Pattern.compile(
-				  "(?<id>\\d+)|"	// ID
-				+ "("				// 		oder
-				+ "(?<name>(\\S+)(\\s+\\S+)*)"	// name
-				+ "\\s*\\=\\s*"		// [Whitespace]=[Whitespace]
-				+ "(?<value>(\\S+)(\\s+\\S+)*)"	// Wert
-				+ ")"
-		);
+		Pattern p = Pattern.compile("(?<id>\\d+)|" // ID
+				+ "(" // oder
+				+ "(?<name>(\\S+)(\\s+\\S+)*)" // name
+				+ "\\s*\\=\\s*" // [Whitespace]=[Whitespace]
+				+ "(?<value>(\\S+)(\\s+\\S+)*)" // Wert
+				+ ")");
 		// @f:on
 		for (String line : lines) {
 			Matcher m = p.matcher(line.trim());

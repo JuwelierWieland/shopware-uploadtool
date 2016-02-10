@@ -37,7 +37,7 @@ public class FtpConnector {
 				return;
 			}
 			ftp.login(this.username, this.password);
-			//System.out.println(Arrays.toString(ftp.listNames()));
+			// System.out.println(Arrays.toString(ftp.listNames()));
 			ftp.changeWorkingDirectory(startdir);
 		} catch (IOException e) {
 			if (ftp.isConnected())
@@ -48,7 +48,7 @@ public class FtpConnector {
 		}
 
 	}
-	
+
 	public String currentDir() {
 		try {
 			return ftp.printWorkingDirectory();
@@ -57,7 +57,7 @@ public class FtpConnector {
 			return null;
 		}
 	}
-	
+
 	public boolean createDir(String dir) {
 		try {
 			return ftp.makeDirectory(dir);
@@ -66,7 +66,7 @@ public class FtpConnector {
 			return false;
 		}
 	}
-	
+
 	public boolean changeDir(String dir) {
 		try {
 			return ftp.changeWorkingDirectory(dir);
@@ -75,7 +75,7 @@ public class FtpConnector {
 			return false;
 		}
 	}
-	
+
 	public boolean removeDir(String dir) {
 		try {
 			return ftp.removeDirectory(dir);
@@ -84,16 +84,16 @@ public class FtpConnector {
 			return false;
 		}
 	}
-	
+
 	public String[] listFiles() {
 		try {
 			return ftp.listNames();
-		} catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	public boolean upload(File file) throws FileNotFoundException {
 		InputStream stream = new FileInputStream(file);
 		try {
@@ -103,7 +103,7 @@ public class FtpConnector {
 			return false;
 		}
 	}
-	
+
 	public boolean deleteFile(String filename) {
 		try {
 			return ftp.deleteFile(filename);

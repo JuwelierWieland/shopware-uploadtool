@@ -2,8 +2,6 @@ package land.sebastianwie.shopware_uploadtool.uiNew;
 
 import java.awt.BorderLayout;
 
-
-
 //import java.awt.GridLayout;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
@@ -63,7 +61,8 @@ public class TabContainer extends JPanel {
 	// private JComboBox<String> selection;
 	// private TabContainer ref;
 
-	// private final String[] selectionItems = { "Information", "Downloads", "Uploads", "Artikel löschen",
+	// private final String[] selectionItems = { "Information", "Downloads",
+	// "Uploads", "Artikel löschen",
 	// "Bestände aktualisieren" };
 
 	// public MenuBar(TabContainer ref) {

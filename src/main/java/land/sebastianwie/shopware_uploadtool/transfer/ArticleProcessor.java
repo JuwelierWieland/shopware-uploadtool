@@ -9,11 +9,6 @@ import java.util.List;
 import java.util.Map;
 //import java.util.Set;
 
-
-
-
-
-
 import javax.swing.JOptionPane;
 
 import land.sebastianwie.shopware_uploadtool.api.ApiConnector;
@@ -26,7 +21,6 @@ import land.sebastianwie.shopware_uploadtool.resources.article.ArticleCategory;
 import land.sebastianwie.shopware_uploadtool.resources.article.ArticleImage;
 import land.sebastianwie.shopware_uploadtool.resources.article.ArticleProperty;
 import land.sebastianwie.shopware_uploadtool.resources.article.ArticleVariant;
-import land.sebastianwie.shopware_uploadtool.ui.MainApplication;
 import land.sebastianwie.shopware_uploadtool.uiNew.LoginPanel.LoginInformation;
 
 import org.apache.http.client.ClientProtocolException;
@@ -60,17 +54,8 @@ public class ArticleProcessor extends Thread {
 		}
 	}
 
-	public ArticleProcessor(ApiConnector ac, ExcelReader reader, ExcelCreator errorCreator, ProcessMode action,
-			ProcessStatus status) {
-		this(ac, reader, errorCreator, action, status, null);
-		this.dbhostname = MainApplication.dbhostname;
-		this.dbusername = MainApplication.dbusername;
-		this.dbpassword = MainApplication.dbpassword;
-		this.dbdatabase = MainApplication.dbdatabase;
-	}
-
-	public ArticleProcessor(ApiConnector ac, ExcelReader reader, ExcelCreator errorCreator, ProcessMode action,
-			ProcessStatus status, LoginInformation login) {
+	public ArticleProcessor(ApiConnector ac, ExcelReader reader, ExcelCreator errorCreator, ProcessMode action, ProcessStatus status,
+			LoginInformation login) {
 		if ((ac == null || reader == null || errorCreator == null || action == null || status == null)
 				&& action != ProcessMode.DOWNLOAD_ALL)
 			throw new IllegalArgumentException();
@@ -108,7 +93,8 @@ public class ArticleProcessor extends Thread {
 						int id = ap.getId();
 						ap = mc.getPropertyById(id);
 						propertyIdMap.put(id, ap);
-						// propertyIdMap.put(ap.getId(), mc.getPropertyById(ap.getId()));
+						// propertyIdMap.put(ap.getId(),
+						// mc.getPropertyById(ap.getId()));
 					} finally {
 						convertedProperties.add(ap);
 					}
@@ -121,19 +107,26 @@ public class ArticleProcessor extends Thread {
 			a.setCustomProductId(mc.getCustomProductId(a.getId()));
 
 		/*
-		 * if (a.getCategories() != null) { Set<ArticleCategory> convertedCategories = new HashSet<>(); for
-		 * (ArticleCategory ac : a.getCategories()) { if (categoryIdMap.containsKey(ac.getId())) {
-		 * convertedCategories.add(categoryIdMap.get(ac.getId())); } else { try { int id = ac.getId(); ac = new
-		 * ArticleCategory(id, mc.getCategoryNameById(id)); categoryIdMap.put(id, ac); } finally {
-		 * convertedCategories.add(ac); } } } a.setCategories(convertedCategories); }
+		 * if (a.getCategories() != null) { Set<ArticleCategory>
+		 * convertedCategories = new HashSet<>(); for (ArticleCategory ac :
+		 * a.getCategories()) { if (categoryIdMap.containsKey(ac.getId())) {
+		 * convertedCategories.add(categoryIdMap.get(ac.getId())); } else { try
+		 * { int id = ac.getId(); ac = new ArticleCategory(id,
+		 * mc.getCategoryNameById(id)); categoryIdMap.put(id, ac); } finally {
+		 * convertedCategories.add(ac); } } }
+		 * a.setCategories(convertedCategories); }
 		 */
 
 		/*
-		 * if (a.getImages() != null) { List<ArticleImage> convertedImages = new ArrayList<>(); for (ArticleImage ai :
-		 * a.getImages()) { if (!ai.usesId()) { convertedImages.add(ai); } else if
-		 * (imageIdMap.containsKey(ai.getMediaId())) { convertedImages.add(imageIdMap.get(ai.getMediaId())); } else {
-		 * try { int id = ai.getMediaId(); ai = new ArticleImage(id, mc.getImageNameByMediaId(id), ai.isMainImage());
-		 * imageIdMap.put(id, ai); } finally { convertedImages.add(ai); } } } a.setImages(convertedImages); }
+		 * if (a.getImages() != null) { List<ArticleImage> convertedImages = new
+		 * ArrayList<>(); for (ArticleImage ai : a.getImages()) { if
+		 * (!ai.usesId()) { convertedImages.add(ai); } else if
+		 * (imageIdMap.containsKey(ai.getMediaId())) {
+		 * convertedImages.add(imageIdMap.get(ai.getMediaId())); } else { try {
+		 * int id = ai.getMediaId(); ai = new ArticleImage(id,
+		 * mc.getImageNameByMediaId(id), ai.isMainImage()); imageIdMap.put(id,
+		 * ai); } finally { convertedImages.add(ai); } } }
+		 * a.setImages(convertedImages); }
 		 */
 	}
 
