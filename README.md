@@ -5,10 +5,12 @@ This application is highly customized for my own needs, so if you want to use it
 ## Installation
 ### Requirements
 * Java 1.7 or higher
-* Maven 3.0.4 or higher
+* Maven 3.0.4 or higher (only for building the project)
 
 ### Installation from binary
-To install without downloading the sources or modifying the files, simply download the Jar-File from the [lastest release](https://github.com/sebastianwieland/shopware-uploadtool/releases/latest)
+To install without downloading the sources or modifying the files, simply download the Jar-File from the [lastest release](https://github.com/sebastianwieland/shopware-uploadtool/releases/latest).
+
+Execute it by double-clicking on it, or by running `java -jar path/to/shopware-uploadtool-version-jar-with-dependencies.jar`
 
 ### Build
 To build the project, navigate to the project-root. Then run maven by executing
