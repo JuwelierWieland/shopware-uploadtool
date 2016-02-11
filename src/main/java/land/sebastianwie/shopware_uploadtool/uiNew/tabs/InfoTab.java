@@ -2,6 +2,10 @@ package land.sebastianwie.shopware_uploadtool.uiNew.tabs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -9,6 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 
 import land.sebastianwie.shopware_uploadtool.uiNew.Controller;
 
@@ -21,15 +32,31 @@ public class InfoTab extends Tab {
 	private JButton saveButton;
 	private Controller c;
 
-	private static final String INFO_FILE = System.getProperty("user.home") + "/.shopwareUploadToolInfo.txt";
-
 	static {
 		String tmp = "";
 		try {
-			tmp = new String(Files.readAllBytes(Paths.get(INFO_FILE)));
-		} catch (Exception e) {
-			// e.printStackTrace();
-			tmp = "Fehler - Keine Infodatei (~/.shopwareUploadToolInfo) vorhanden.";
+			HttpClient client = HttpClients.createDefault();
+			HttpGet request = new HttpGet("https://raw.githubusercontent.com/sebastianwieland/shopware-uploadtool/master/README.md");
+			HttpResponse response = client.execute(request);
+			HttpEntity entity = response.getEntity();
+
+			StringBuilder result = new StringBuilder();
+			if (entity != null) {
+				InputStream instream = entity.getContent();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+				try {
+					char[] buffer = new char[1024];
+					int readChars = 0;
+					while ((readChars = reader.read(buffer)) > 0)
+						result.append(buffer, 0, readChars);
+					tmp = result.toString();
+				} finally {
+					instream.close();
+					reader.close();
+				}
+			}
+		} catch (IOException e) {
+			tmp = "Can't fetch info\n" + e.getMessage();
 		}
 		infoTxt = tmp;
 	}
