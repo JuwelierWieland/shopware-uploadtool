@@ -1,13 +1,22 @@
 package land.sebastianwie.shopware_uploadtool.topm;
 
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import land.sebastianwie.shopware_uploadtool.util.DocumentUtils;
 
-import org.dom4j.Document;
-import org.dom4j.Node;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Mit dieser Klasse kann man TOPM-Artikelnummern in Shopware-Artikelnummern
@@ -18,17 +27,33 @@ import org.dom4j.Node;
  */
 public class SupplierMapper {
 
-	private Document supplierXML;
 	private static final String DELIMITER = "-";
 
-	/**
-	 * Erstellt einen neuen Mapper
-	 * 
-	 * @param suppliers
-	 *            Die XML-Datei, in der die Hersteller aufgelistet sind.
-	 */
-	public SupplierMapper(Document suppliers) {
-		this.supplierXML = suppliers;
+	private JSONObject suppliersJson;
+	private Map<String, Pattern> regexPatterns;
+
+	public SupplierMapper(String jsonUrl) throws IOException {
+		HttpClient client = HttpClients.createDefault();
+		HttpGet request = new HttpGet(jsonUrl);
+		HttpResponse response = client.execute(request);
+		HttpEntity entity = response.getEntity();
+
+		StringBuilder result = new StringBuilder();
+		if (entity != null) {
+			InputStream instream = entity.getContent();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+			try {
+				char[] buffer = new char[1024];
+				int readChars = 0;
+				while ((readChars = reader.read(buffer)) > 0)
+					result.append(buffer, 0, readChars);
+
+				this.suppliersJson = new JSONObject(result.toString());
+			} finally {
+				instream.close();
+				reader.close();
+			}
+		}
 	}
 
 	/**
@@ -39,27 +64,41 @@ public class SupplierMapper {
 	 * @return
 	 */
 	public int getShopwareSupplierId(int topmSupplier, String ordernumber) {
-		@SuppressWarnings("unchecked")
-		List<Node> suppliers = supplierXML.selectNodes("/suppliers/supplier");
+		JSONArray suppliers = this.suppliersJson.getJSONArray("suppliers");
+		JSONObject defaults = this.suppliersJson.getJSONObject("defaults");
+		String defaultBnRegex = defaults.getString("bnregex");
 
-		for (Node supplier : suppliers) {
-			try {
-				Number xmlTopmID = supplier.numberValueOf("topmid");
-				if (xmlTopmID != null && xmlTopmID.intValue() == topmSupplier) {
-					Pattern orderNumberPattern = Pattern.compile(supplier.valueOf("bnregex"));
-					Matcher orderNumberMatcher = orderNumberPattern.matcher(ordernumber);
-					if (orderNumberMatcher.matches()) {
-						Number result = supplier.numberValueOf("swsid");
-						if (result != null)
-							return result.intValue();
-					}
-				}
-			} catch (Exception e) {
-				System.err.println(e);
+		for (Object supplierObject : suppliers) {
+			if (supplierObject instanceof JSONObject) {
+				JSONObject supplier = (JSONObject) supplierObject;
+				if (!supplier.has("swsid") || !supplier.has("topmid"))
+					continue;
+				if (topmSupplier != supplier.getInt("topmid"))
+					continue;
+
+				String bnRegex = defaultBnRegex;
+				if (supplier.has("bnregex"))
+					bnRegex = supplier.getString("bnregex");
+
+				Pattern orderNumberPattern = this.getRegexPattern(bnRegex);
+				Matcher orderNumberMatcher = orderNumberPattern.matcher(ordernumber);
+
+				if (orderNumberMatcher.matches())
+					return supplier.getInt("swsid");
 			}
 		}
-
+		
 		return -1;
+	}
+
+	private Pattern getRegexPattern(String regex) {
+		if (this.regexPatterns == null)
+			this.regexPatterns = new HashMap<>();
+
+		if (!this.regexPatterns.containsKey(regex))
+			this.regexPatterns.put(regex, Pattern.compile(regex));
+
+		return this.regexPatterns.get(regex);
 	}
 
 	/**
@@ -81,9 +120,8 @@ public class SupplierMapper {
 		return ordernumber.replaceAll("[^\\w.-]", "_");
 	}
 
-	public static void main(String[] args) {
-		Document suppliers = DocumentUtils.fromURL("/home/sebastian/tmp/suppliers.xml");
-		SupplierMapper mapper = new SupplierMapper(suppliers);
+	public static void main(String[] args) throws IOException {
+		SupplierMapper mapper = new SupplierMapper("https://raw.githubusercontent.com/sebastianwieland/wielandfiles/master/suppliers.json");
 		System.out.println(mapper.toShopwareArtNr(475, "7&234.56"));
 	}
 

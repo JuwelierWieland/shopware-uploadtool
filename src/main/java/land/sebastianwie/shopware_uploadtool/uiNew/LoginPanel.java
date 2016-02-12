@@ -17,8 +17,9 @@ public class LoginPanel extends JPanel {
 	private Controller c;
 
 	private JLabel info, serverLabel, usernameLabel, apiKeyLabel, ftpServerLabel, ftpUsernameLabel, ftpPasswordLabel, mySQLServerLabel,
-			mySQLUsernameLabel, mySQLPasswordLabel, mySQLSchemaLabel;
-	private JTextField serverTxt, usernameTxt, ftpServerTxt, ftpUsernameTxt, mySQLServerTxt, mySQLUsernameTxt, mySQLSchemaTxt;
+			mySQLUsernameLabel, mySQLPasswordLabel, mySQLSchemaLabel, supplierJsonUrlLabel;
+	private JTextField serverTxt, usernameTxt, ftpServerTxt, ftpUsernameTxt, mySQLServerTxt, mySQLUsernameTxt, mySQLSchemaTxt,
+			supplierJsonUrlTxt;
 	private JPasswordField apiKeyTxt, ftpPasswordTxt, mySQLPasswordTxt;
 	private JButton saveButton, loginButton;
 
@@ -44,6 +45,8 @@ public class LoginPanel extends JPanel {
 		mySQLPasswordLabel = new JLabel("MySQL-Passwort");
 		mySQLSchemaLabel = new JLabel("MySQL-Datenbank");
 
+		supplierJsonUrlLabel = new JLabel("Suppliers-Map URL");
+
 		serverTxt = new JTextField(loginPresets.getProperty("swServer"));
 		usernameTxt = new JTextField(loginPresets.getProperty("swUsername"));
 		apiKeyTxt = new JPasswordField(loginPresets.getProperty("swApiKey"));
@@ -56,6 +59,8 @@ public class LoginPanel extends JPanel {
 		mySQLUsernameTxt = new JTextField(loginPresets.getProperty("mySqlUsername"));
 		mySQLPasswordTxt = new JPasswordField(loginPresets.getProperty("mySqlPassword"));
 		mySQLSchemaTxt = new JTextField(loginPresets.getProperty("mySqlSchema"));
+
+		supplierJsonUrlTxt = new JTextField(loginPresets.getProperty("supplierJsonUrl"));
 
 		saveButton = new JButton("Einstellungen speichern");
 		loginButton = new JButton("Anmelden");
@@ -179,6 +184,16 @@ public class LoginPanel extends JPanel {
 		layout.putConstraint(SpringLayout.EAST, mySQLSchemaTxt, 0, SpringLayout.EAST, serverTxt);
 		this.add(mySQLSchemaTxt);
 
+		layout.putConstraint(SpringLayout.NORTH, supplierJsonUrlLabel, 20, SpringLayout.SOUTH, mySQLSchemaLabel);
+		layout.putConstraint(SpringLayout.WEST, supplierJsonUrlLabel, 0, SpringLayout.WEST, serverLabel);
+		layout.putConstraint(SpringLayout.EAST, supplierJsonUrlLabel, 0, SpringLayout.EAST, serverLabel);
+		this.add(supplierJsonUrlLabel);
+
+		layout.putConstraint(SpringLayout.WEST, supplierJsonUrlTxt, 10, SpringLayout.EAST, serverLabel);
+		layout.putConstraint(SpringLayout.BASELINE, supplierJsonUrlTxt, 0, SpringLayout.BASELINE, supplierJsonUrlLabel);
+		layout.putConstraint(SpringLayout.EAST, supplierJsonUrlTxt, 0, SpringLayout.EAST, serverTxt);
+		this.add(supplierJsonUrlTxt);
+
 		layout.putConstraint(SpringLayout.WEST, loginButton, 10, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.SOUTH, loginButton, -10, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.EAST, loginButton, -10, SpringLayout.EAST, this);
@@ -202,6 +217,7 @@ public class LoginPanel extends JPanel {
 		loginPresets.put("mySqlUsername", mySQLUsernameTxt.getText());
 		loginPresets.put("mySqlPassword", new String(mySQLPasswordTxt.getPassword()));
 		loginPresets.put("mySqlSchema", mySQLSchemaTxt.getText());
+		loginPresets.put("supplierJsonUrl", supplierJsonUrlTxt.getText());
 		c.setLoginPresets(loginPresets);
 		c.saveLoginPresets();
 	}
@@ -218,6 +234,7 @@ public class LoginPanel extends JPanel {
 		i.mySqlUsername = mySQLUsernameTxt.getText();
 		i.mySqlPassword = new String(mySQLPasswordTxt.getPassword());
 		i.mySqlSchema = mySQLSchemaTxt.getText();
+		i.supplierJsonUrl = supplierJsonUrlTxt.getText();
 
 		c.login(i);
 	}
@@ -233,6 +250,7 @@ public class LoginPanel extends JPanel {
 		public String mySqlUsername;
 		public String mySqlPassword;
 		public String mySqlSchema;
+		public String supplierJsonUrl;
 	}
 
 }

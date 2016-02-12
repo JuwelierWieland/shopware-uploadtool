@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import land.sebastianwie.shopware_uploadtool.resources.article.Article;
-import land.sebastianwie.shopware_uploadtool.util.DocumentUtils;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -99,20 +96,5 @@ public class TopmExcelList implements TopmArticleList {
 			return 0;
 		else
 			return Math.min(0, articles.getPhysicalNumberOfRows() - 3);
-	}
-
-	public static void main(String[] args) {
-		TopmArticleList al = new TopmExcelList("/home/sebastian/Downloads/Mappe1.xlsx");
-
-		SupplierMapper mapper = new SupplierMapper(DocumentUtils.fromURL("/home/sebastian/tmp/suppliers.xml"));
-		int i = 0;
-		for (TopMArticle a : al) {
-			Article ar = a.toArticle(mapper);
-			if (ar != null) {
-				System.out.println(ar.toJSONObject().toString(4));
-				i++;
-			}
-		}
-		System.out.println(i);
 	}
 }
