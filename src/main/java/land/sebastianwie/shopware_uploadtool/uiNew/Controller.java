@@ -425,6 +425,10 @@ public class Controller {
 		unlockWindow(info.toUnlockWindow);
 	}
 
+	private static boolean launchApplication() {
+		return true;
+	}
+	
 	public static void main(String[] args) {
 		// try {
 		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -432,7 +436,9 @@ public class Controller {
 		//
 		// }
 		WebLookAndFeel.install();
-		new Controller();
+		
+		Controller c = Controller.launchApplication()?
+		new Controller() : null;
 	}
 
 	private class ActionInformation {
