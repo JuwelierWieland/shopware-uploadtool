@@ -28,7 +28,7 @@ public class MysqlConnector {
 		connProperties.put("user", username);
 		connProperties.put("password", password);
 
-		conn = DriverManager.getConnection("jdbc:mysql://" + hostname + ":3306/" + database, connProperties);
+		conn = DriverManager.getConnection("jdbc:mysql://" + hostname + ":3306/" + database + "?autoReconnect=true&useSSL=false", connProperties);
 	}
 
 	/**
@@ -53,10 +53,10 @@ public class MysqlConnector {
 		if (customGroupId < 0)
 			return deleteCustomProduct(articleId);
 		Statement s = conn.createStatement();
-		int updateResult = s.executeUpdate("update s_plugin_customizing_articles set group_id=" + customGroupId + " where article_id="
+		int updateResult = s.executeUpdate("update s_plugin_custom_products_template_product_relation set template_id=" + customGroupId + " where article_id="
 				+ articleId);
 		if (updateResult == 0)
-			return s.executeUpdate("insert into s_plugin_customizing_articles(article_id, group_id) values(" + articleId + ", "
+			return s.executeUpdate("insert into s_plugin_custom_products_template_product_relation(article_id, template_id) values(" + articleId + ", "
 					+ customGroupId + ")");
 		else
 			return updateResult;
@@ -72,9 +72,9 @@ public class MysqlConnector {
 	 */
 	public int getCustomProductId(int articleId) throws SQLException {
 		Statement s = conn.createStatement();
-		ResultSet rs = s.executeQuery("select group_id from s_plugin_customizing_articles where article_id=" + articleId);
+		ResultSet rs = s.executeQuery("select template_id from s_plugin_custom_products_template_product_relation where article_id=" + articleId);
 		if (rs.next())
-			return rs.getInt("group_id");
+			return rs.getInt("template_id");
 		else
 			return -1;
 	}
@@ -88,7 +88,7 @@ public class MysqlConnector {
 	 */
 	public int deleteCustomProduct(int articleId) throws SQLException {
 		Statement s = conn.createStatement();
-		return s.executeUpdate("delete from s_plugin_customizing_articles where article_id=" + articleId);
+		return s.executeUpdate("delete from s_plugin_custom_products_template_product_relation where article_id=" + articleId);
 	}
 
 	/**
